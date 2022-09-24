@@ -1,0 +1,2 @@
+Hello World from Distributed
+Value coming from file and read by connector

@@ -1,0 +1,1 @@
+create table country_driver as select country_code, count(*) as numbers from driver_location group by country_code;

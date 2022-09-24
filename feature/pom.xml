@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>be.sgerard.handson</groupId>
+		<artifactId>kafka-hadson-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<packaging>pom</packaging>
+	<artifactId>kafka-handson-feature</artifactId>
+	<name>kafka-hadson-feature</name>
+	<description>Kafka Hands on - Feature</description>
+
+	<modules>
+		<module>avro-schema</module>
+		<module>cooperative-receiver-1</module>
+		<module>cooperative-receiver-2</module>
+		<module>consumer-avro</module>
+		<module>consumer-1-group-1</module>
+		<module>consumer-1-group-2</module>
+		<module>consumer-2-group-1</module>
+		<module>producer-with-key</module>
+		<module>producer-without-key</module>
+		<module>producer-avro</module>
+		<module>stream</module>
+	</modules>
+</project>

@@ -1,0 +1,7 @@
+kafka:
+  bootstrapAddress: localhost:19092
+  groupIdNative: kafka-hands-on-avro-group-native
+  groupIdSpring: kafka-hands-on-avro-group-spring
+  topic: kafka-hands-on-avro
+  schema-registry:
+    url: http://localhost:8081

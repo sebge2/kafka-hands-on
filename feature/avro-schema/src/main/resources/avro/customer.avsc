@@ -1,0 +1,34 @@
+{
+  "type": "record",
+  "namespace": "be.sgerard.kafkahandson",
+  "name": "Customer",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "string",
+      "doc": ""
+    },
+    {
+      "name": "lastName",
+      "type": "string",
+      "doc": ""
+    },
+    {
+      "name": "middleName",
+      "type": ["null","string"],
+      "default": null,
+      "doc": ""
+    },
+    {
+      "name": "adAllowed",
+      "type": "boolean",
+      "doc": ""
+    },
+    {
+      "name": "lastLogin",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": ""
+    }
+  ]
+}

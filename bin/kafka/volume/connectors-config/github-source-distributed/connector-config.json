@@ -1,0 +1,12 @@
+{
+  "name": "github-kubernetes",
+  "config": {
+    "connector.class": "be.sgerard.kafka.GitHubSourceConnector",
+    "tasks.max": "1",
+
+    "topic": "github-kubernetes",
+    "github.owner": "kubernetes",
+    "github.repository": "kubernetes",
+    "since.timestamp": "2020-01-01T00:00:00Z"
+  }
+}

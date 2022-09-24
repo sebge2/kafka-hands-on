@@ -1,0 +1,13 @@
+kafka:
+  bootstrapAddress: localhost:39092
+  topic: wikimedia
+  groupId: consumer-opensearch-demo
+
+opensearch:
+  hostname: localhost
+  port: 9200
+  username: admin
+  password: admin
+  scheme: https
+  insecure: true
+  index: wikimedia

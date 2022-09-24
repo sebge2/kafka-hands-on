@@ -1,0 +1,1 @@
+create stream user_complaint with (kafka_topic='user_complaint', value_format='avro', partitions='1', replicas='1');

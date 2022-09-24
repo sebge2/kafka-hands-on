@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>be.sgerard.handson</groupId>
+		<artifactId>kafka-hadson-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<packaging>pom</packaging>
+	<artifactId>kafka-handson-test-case</artifactId>
+	<name>kafka-hadson-test-case</name>
+	<description>Kafka Hands on - Test Case</description>
+
+	<modules>
+		<module>wikimedia</module>
+		<module>github-connector</module>
+		<module>taxi-time-function</module>
+		<module>word-count-stream</module>
+		<module>word-count-stream-spring</module>
+		<module>favourite-color-stream</module>
+		<module>bank-balance-stream</module>
+	</modules>
+</project>

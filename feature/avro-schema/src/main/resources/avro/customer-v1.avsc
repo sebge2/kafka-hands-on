@@ -1,0 +1,42 @@
+{
+  "type": "record",
+  "namespace": "be.sgerard.kafkahandson",
+  "name": "CustomerV1",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "string",
+      "doc": ""
+    },
+    {
+      "name": "lastName",
+      "type": "string",
+      "doc": ""
+    },
+    {
+      "name": "age",
+      "type": "int",
+      "doc": ""
+    },
+    {
+      "name": "weight",
+      "type": "float",
+      "doc": ""
+    },
+    {
+      "name": "phoneNumber",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": ""
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "default": "missing@example.com",
+      "doc": ""
+    }
+  ]
+}

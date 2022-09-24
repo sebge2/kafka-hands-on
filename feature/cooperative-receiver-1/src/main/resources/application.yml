@@ -1,0 +1,5 @@
+kafka:
+  bootstrapAddress: localhost:29092
+  groupId: kafka-hands-on-cooperative-assignor-group-1
+  topic: kafka-hands-on-cooperative-assignor
+  groupInstanceId: receiver-1

@@ -1,0 +1,15 @@
+{
+  "name": "elasticsearch-stream-demo-distributed",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+    "tasks.max": "2",
+    "topics": "demo-elasticsearch-sink-distributed",
+    "connection.url": "http://elasticsearch:9200",
+    "elastic.security.protocol": "PLAINTEXT",
+    "type.name": "kafka-connect",
+    "key.ignore": "true",
+    "value.converter.schemas.enable": "false",
+    "key.converter.schemas.enable": "true",
+    "schemas.enable": "false"
+  }
+}

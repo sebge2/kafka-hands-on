@@ -1,0 +1,2 @@
+Hello World from Standalone
+Value coming from file and read by connector

@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "namespace": "be.sgerard.kafkahandson",
+  "name": "CustomerAddress",
+  "fields": [
+    {
+      "name": "street",
+      "type": "string",
+      "doc": "Street name and number"
+    },
+    {
+      "name": "zipCode",
+      "type": "int",
+      "doc": "Zip code of the city"
+    },
+    {
+      "name": "city",
+      "type": "string",
+      "doc": "City name"
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "doc": "Address type"
+    }
+  ]
+}

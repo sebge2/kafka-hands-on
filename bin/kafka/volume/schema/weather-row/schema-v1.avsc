@@ -1,0 +1,32 @@
+{
+  "schema": "{
+    \"type\": \"record\",
+    \"name\": \"weather_row\",
+    \"fields\": [
+      {
+        \"name\": \"city_name\",
+        \"type\": \"string\"
+      },
+      {
+        \"name\": \"country\",
+        \"type\": \"string\"
+      },
+      {
+        \"name\": \"rain\",
+        \"type\": \"double\"
+      },
+      {
+        \"name\": \"description\",
+        \"type\": \"string\"
+      },
+      {
+        \"name\": \"longitude\",
+        \"type\": \"double\"
+      },
+      {
+        \"name\": \"latitude\",
+        \"type\": \"double\"
+      }
+    ]
+  }"
+}

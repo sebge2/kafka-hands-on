@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "namespace": "be.sgerard.kafkahandson",
+  "name": "Customer",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "string",
+      "doc": ""
+    },
+    {
+      "name": "lastName",
+      "type": "string",
+      "doc": ""
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="kafka-hadson-consumer-avro" />
+        <module name="kafka-hadson-stream" />
+        <module name="kafka-hadson-github-connector" />
+        <module name="kafka-hadson-taxi-time-function" />
+        <module name="kafka-hadson-consumer-1-group-1" />
+        <module name="kafka-handson-word-count-stream" />
+        <module name="kafka-hadson-producer-without-key" />
+        <module name="kafka-hadson-cooperative-receiver-2" />
+        <module name="kafka-handson-word-count-stream-spring" />
+        <module name="kafka-hadson-cooperative-receiver-1" />
+        <module name="kafka-handson-wikimedia-producer" />
+        <module name="kafka-handson-wikimedia-consumer" />
+        <module name="kafka-hadson-producer-with-key" />
+        <module name="kafka-hadson-consumer-1-group-2" />
+        <module name="kafka-handson-favorite-color-stream" />
+        <module name="kafka-hadson-consumer-2-group-1" />
+        <module name="kafka-hadson-avro-schema" />
+        <module name="kafka-hadson-producer-avro" />
+        <module name="kafka-handson-bank-balance-stream" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="kafka-handson-opensearch-consumer" target="17" />
+      <module name="my-source-connector" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kafka-hadson-avro-schema" options="-parameters" />
+      <module name="kafka-hadson-consumer-1-group-1" options="-parameters" />
+      <module name="kafka-hadson-consumer-1-group-2" options="-parameters" />
+      <module name="kafka-hadson-consumer-2-group-1" options="-parameters" />
+      <module name="kafka-hadson-consumer-avro" options="-parameters" />
+      <module name="kafka-hadson-cooperative-receiver-1" options="-parameters" />
+      <module name="kafka-hadson-cooperative-receiver-2" options="-parameters" />
+      <module name="kafka-hadson-github-connector" options="-parameters" />
+      <module name="kafka-hadson-producer-avro" options="-parameters" />
+      <module name="kafka-hadson-producer-with-key" options="-parameters" />
+      <module name="kafka-hadson-producer-without-key" options="-parameters" />
+      <module name="kafka-hadson-stream" options="-parameters" />
+      <module name="kafka-hadson-taxi-time-function" options="-parameters" />
+      <module name="kafka-hands-on" options="" />
+      <module name="kafka-handson-bank-balance-stream" options="-parameters" />
+      <module name="kafka-handson-favorite-color-stream" options="-parameters" />
+      <module name="kafka-handson-opensearch-consumer" options="-parameters" />
+      <module name="kafka-handson-wikimedia-consumer" options="-parameters" />
+      <module name="kafka-handson-wikimedia-producer" options="-parameters" />
+      <module name="kafka-handson-word-count-stream" options="-parameters" />
+      <module name="kafka-handson-word-count-stream-spring" options="-parameters" />
+      <module name="my-source-connector" options="-parameters" />
+    </option>
+  </component>
+</project>

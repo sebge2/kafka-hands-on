@@ -1,0 +1,15 @@
+{
+  "records": [
+    {
+      "key":  "my-first-key",
+      "value": {
+        "hello": "world"
+      }
+    },
+    {
+      "value": {
+        "hello": "world"
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+kafka:
+  bootstrapAddress: localhost:29092
+  topic-1: kafka-hands-on-range-assignor
+  topic-2: kafka-hands-on-cooperative-assignor

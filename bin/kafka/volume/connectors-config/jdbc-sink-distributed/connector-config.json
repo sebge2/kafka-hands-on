@@ -1,0 +1,14 @@
+{
+  "name": "postgresql-stream-demo-distributed",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max": "1",
+    "topics": "demo-postgresql-sink-distributed",
+    "connection.url": "jdbc:postgresql://postgres:5432/postgres",
+    "connection.user": "postgres",
+    "connection.password": "postgres",
+    "insert.mode": "upsert",
+    "pk.mode": "kafka",
+    "auto.create": "true"
+  }
+}

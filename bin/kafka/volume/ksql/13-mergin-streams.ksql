@@ -1,0 +1,24 @@
+create stream ride_request_europe(
+    user varchar,
+    longitude double,
+    latitude double,
+    city_name varchar
+) with (kafka_topic='ride_request_europe', partitions='1', replicas='1', value_format='json');
+
+create stream ride_request_usa (
+    user varchar,
+    longitude double,
+    latitude double,
+    city_name varchar
+) with (kafka_topic='ride_request_usa', partitions='1', replicas='1', value_format='json');
+
+create stream ride_request_world(
+    data_source varchar,
+    user varchar,
+    longitude double,
+    latitude double,
+    city_name varchar
+) with (kafka_topic='ride_request_world', partitions='1', replicas='1', value_format='json');
+
+insert into ride_request_world select 'Europe' as data_source, * from ride_request_europe;
+insert into ride_request_world select 'USA' as data_source, * from ride_request_usa;

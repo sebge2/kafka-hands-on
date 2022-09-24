@@ -1,0 +1,7 @@
+create stream user_profile (
+    id varchar,
+    firstname varchar,
+    lastname varchar,
+    country_code varchar,
+    rating double)
+with (kafka_topic='user_profile', value_format='json', partitions='1', replicas='1');

@@ -1,0 +1,5 @@
+kafka:
+  bootstrapAddress: localhost:19092
+  topic: kafka-hands-on-avro
+  schema-registry:
+    url: http://localhost:8081

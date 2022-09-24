@@ -1,0 +1,9 @@
+{
+  "name": "http-stream-demo-distributed",
+  "config": {
+    "connector.class": "com.github.cjmatta.kafka.connect.sse.ServerSentEventsSourceConnector",
+    "tasks.max": "1",
+    "sse.uri": "https://stream.wikimedia.org/v2/stream/recentchange",
+    "topic": "demo-http-source-distributed"
+  }
+}

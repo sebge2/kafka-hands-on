@@ -1,0 +1,1 @@
+create table weather_table_row with(kafka_topic='WEATHER_ROW', value_format='avro', key='city_name');

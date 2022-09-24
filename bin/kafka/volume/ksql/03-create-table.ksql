@@ -1,0 +1,9 @@
+create table country (code varchar, name varchar) with (kafka_topic='country', value_format='delimited', partitions='1', replicas='1', key='code');
+
+insert into country(code, name) values ('BE','Belgium');
+insert into country(code, name) values ('FR','France');
+insert into country(code, name) values ('AU','Australia');
+insert into country(code, name) values ('IN','India');
+insert into country(code, name) values ('GB','Great Britain');
+insert into country(code, name) values ('US','United States');
+insert into country(code, name) values ('Ru','Russia');

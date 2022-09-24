@@ -1,0 +1,6 @@
+{
+  "name": "my-binary-consumer",
+  "format": "binary",
+  "auto.offset.reset": "earliest",
+  "auto.commit.enable": "false"
+}

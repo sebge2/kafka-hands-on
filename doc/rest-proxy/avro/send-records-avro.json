@@ -1,0 +1,15 @@
+{
+  "value_schema": "{\"type\": \"record\", \"name\": \"myObject\", \"fields\": [ { \"name\": \"f1\", \"type\": \"string\"}]}",
+  "records": [
+    {
+      "value": {
+        "f1": "hello"
+      }
+    },
+    {
+      "value": {
+        "f1": "world"
+      }
+    }
+  ]
+}

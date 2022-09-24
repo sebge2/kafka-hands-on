@@ -1,0 +1,6 @@
+{
+  "name": "my-json-consumer",
+  "format": "json",
+  "auto.offset.reset": "earliest",
+  "auto.commit.enable": "false"
+}

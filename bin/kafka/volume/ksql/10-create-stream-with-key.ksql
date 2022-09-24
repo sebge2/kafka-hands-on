@@ -1,0 +1,9 @@
+create stream weather_row with (value_format='avro') as
+    select
+        city->name as city_name,
+        city->country as country,
+        rain,
+        description,
+        city->longitude as longitude,
+        city->latitude as latitude
+    from weather partition by city_name;

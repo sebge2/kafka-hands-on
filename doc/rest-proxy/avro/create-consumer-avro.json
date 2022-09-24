@@ -1,0 +1,6 @@
+{
+  "name": "my-avro-consumer",
+  "format": "avro",
+  "auto.offset.reset": "earliest",
+  "auto.commit.enable": "false"
+}

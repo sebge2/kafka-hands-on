@@ -1,0 +1,11 @@
+create source connector car_user with(
+    "connector.class"='io.confluent.connect.jdbc.JdbcSourceConnector',
+    "connection.url"='jdbc:postgresql://postgres:5432/postgres',
+    "mode"='incrementing',
+    "incrementing.column.name"='id',
+    "table.whitelist"='car_user',
+    "connection.user"='postgres',
+    "connection.password"='postgres',
+    "topic.prefix"='db-',
+    "key"='user_name'
+);

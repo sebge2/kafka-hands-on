@@ -1,0 +1,33 @@
+{
+  "type": "record",
+  "namespace": "be.sgerard.kafkahandson",
+  "name": "CustomerV2",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "string",
+      "doc": ""
+    },
+    {
+      "name": "lastName",
+      "type": "string",
+      "doc": ""
+    },
+    {
+      "name": "age",
+      "type": "int",
+      "doc": ""
+    },
+    {
+      "name": "weight",
+      "type": "float",
+      "doc": ""
+    },
+    {
+      "name": "automatedEmail",
+      "type": "boolean",
+      "default": true,
+      "doc": ""
+    }
+  ]
+}

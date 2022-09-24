@@ -1,0 +1,13 @@
+create stream requested_journey as
+select
+    rr.latitude as from_latitude,
+    rr.longitude as from_longitude,
+    rr.user,
+    rr.city_name as city_name,
+    w.latitude as to_latitude,
+    w.longitude as to_longitude,
+    w.description as weather_description,
+    w.rain,
+    geo_distance(rr.latitude, rr.longitude, w.latitude, w.longitude, 'km') as distance
+from ride_request_world rr
+left join weather_table_row w on rr.city_name = w.city_name;

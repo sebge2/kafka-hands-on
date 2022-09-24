@@ -1,0 +1,5 @@
+kafka:
+  bootstrapServers: localhost:19092,localhost:29092
+  topic-in: word-count-input
+  topic-out: word-count-output-spring
+  app-name: word-count-spring-application

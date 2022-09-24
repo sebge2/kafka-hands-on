@@ -1,0 +1,4 @@
+kafka:
+  bootstrapAddress: localhost:29092
+  groupId: kafka-hands-on-range-assignor-group-1
+  topic: kafka-hands-on-range-assignor
