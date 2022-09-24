@@ -1,0 +1,4 @@
+kafka:
+  bootstrapAddress: localhost:39092
+  groupId: kafka-hands-on-group-2
+  topic: kafka-hands-on

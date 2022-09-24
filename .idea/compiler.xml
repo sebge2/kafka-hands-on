@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="kafka-hadson-sender-without-key" />
+        <module name="kafka-hadson-receiver-2-group-1" />
+        <module name="kafka-hadson-receiver-1-group-2" />
+        <module name="kafka-hadson-receiver-1-group-1" />
+        <module name="kafka-hadson-sender-with-key" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="kafka-hadson-receiver-1-group-1" target="17" />
+      <module name="kafka-hadson-receiver-1-group-2" target="17" />
+      <module name="kafka-hadson-receiver-2-group-1" target="17" />
+      <module name="kafka-hadson-sender-with-key" target="17" />
+      <module name="kafka-hadson-sender-without-key" target="17" />
+      <module name="kafka-hands-on" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kafka-hadson-receiver-1-group-1" options="-parameters" />
+      <module name="kafka-hadson-receiver-1-group-2" options="-parameters" />
+      <module name="kafka-hadson-receiver-2-group-1" options="-parameters" />
+      <module name="kafka-hadson-sender-with-key" options="-parameters" />
+      <module name="kafka-hadson-sender-without-key" options="-parameters" />
+      <module name="kafka-hands-on" options="" />
+    </option>
+  </component>
+</project>

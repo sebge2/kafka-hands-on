@@ -1,1 +1,68 @@
-# kafka-hands-on
+# Kafka Hands On
+
+
+## Startup
+````
+cd bin/
+docker-compose up -d
+./connect_cluster.sh
+````
+
+
+## Setup
+
+The examples require to perform the following setup:
+
+````
+cd bin/
+./connect_cluster.sh
+kafka-topics --bootstrap-server localhost:9092 --create --topic kafka-hands-on --partitions 2
+````
+
+
+## Commands
+
+### Kafka Topics Command
+
+````
+kafka-topics --bootstrap-server localhost:9092 --list
+kafka-topics --bootstrap-server localhost:9092 --create --topic test --partitions 3 --replication-factor 2
+kafka-topics --bootstrap-server localhost:9092 --create --topic --describe test
+kafka-topics --bootstrap-server localhost:9092 --delete --topic test
+````
+
+### Kafka Console Producer
+
+````
+kafka-console-producer --bootstrap-server localhost:9092 --topic test
+kafka-console-producer --bootstrap-server localhost:9092 --topic test --property parse.key=true --property key.separator=:
+````
+
+
+### Kafka Console Consumer
+
+````
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning --formatter kafka.tools.DefaultMessageFormatter --property print.timestamp=true --property print.key=true --prty print.value=true
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test --group group1
+````
+
+
+### Kafka Console Consumer Group
+
+````
+kafka-consumer-groups --bootstrap-server localhost:9092 --list
+kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group group1
+kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-offsets --to-earliest --execute --topic test
+kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-offsets --shift-by 2 --execute --topic test
+kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-offsets --shift-by -2 --execute --topic test
+kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-offsets --shift-by -2 --execute --all-topics
+````
+
+
+## Links
+
+* [Course](https://www.udemy.com/course/apache-kafka)
+* [Spring Kafka on Baeldung](https://www.baeldung.com/spring-kafka)
+* [Spring Kafka Streams on Baeldung](https://www.baeldung.com/spring-boot-kafka-streams)
