@@ -1,3 +1,4 @@
 kafka:
   bootstrapAddress: localhost:39092
-  topic: kafka-hands-on
+  topic-1: kafka-hands-on-range-assignor
+  topic-2: kafka-hands-on-cooperative-assignor

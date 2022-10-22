@@ -23,7 +23,7 @@ public class KafkaTestSender {
 
     @Scheduled(fixedDelay = 15000, initialDelay = 1000)
     public void sendMessage() throws ExecutionException, InterruptedException {
-        System.out.println("Send message with key");
+        System.out.println("Send message without key on topic " + topic);
 
         for (int i = 0; i < 10; i++) {
             final SendResult<String, String> sendResult = template.send(topic, "key-%s".formatted(i), "Hello World! " + UUID.randomUUID()).completable().get();

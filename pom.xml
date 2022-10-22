@@ -21,6 +21,8 @@
 	</properties>
 
 	<modules>
+		<module>kafka-cooperative-receiver-1</module>
+		<module>kafka-cooperative-receiver-2</module>
 		<module>kafka-receiver-1-group-1</module>
 		<module>kafka-receiver-1-group-2</module>
 		<module>kafka-receiver-2-group-1</module>

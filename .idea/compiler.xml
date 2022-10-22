@@ -11,9 +11,13 @@
         <module name="kafka-hadson-receiver-1-group-2" />
         <module name="kafka-hadson-receiver-1-group-1" />
         <module name="kafka-hadson-sender-with-key" />
+        <module name="kafka-hadson-cooperative-receiver-2" />
+        <module name="kafka-hadson-cooperative-receiver-1" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="kafka-hadson-cooperative-receiver-1" target="17" />
+      <module name="kafka-hadson-cooperative-receiver-2" target="17" />
       <module name="kafka-hadson-receiver-1-group-1" target="17" />
       <module name="kafka-hadson-receiver-1-group-2" target="17" />
       <module name="kafka-hadson-receiver-2-group-1" target="17" />
@@ -24,6 +28,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kafka-hadson-cooperative-receiver-1" options="-parameters" />
+      <module name="kafka-hadson-cooperative-receiver-2" options="-parameters" />
       <module name="kafka-hadson-receiver-1-group-1" options="-parameters" />
       <module name="kafka-hadson-receiver-1-group-2" options="-parameters" />
       <module name="kafka-hadson-receiver-2-group-1" options="-parameters" />
