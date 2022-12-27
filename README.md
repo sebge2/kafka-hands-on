@@ -3,7 +3,7 @@
 
 ## Startup
 ````
-cd bin/
+cd bin/kafka
 docker-compose up -d
 ./connect_cluster.sh
 ````

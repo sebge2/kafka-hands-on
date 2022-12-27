@@ -29,6 +29,7 @@
 		<module>kafka-sender-with-key</module>
 		<module>kafka-sender-without-key</module>
 		<module>wikimedia-producer</module>
+		<module>kafka-handson-opensearch-consumer</module>
 	</modules>
 
 </project>
