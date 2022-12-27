@@ -1,7 +1,6 @@
 package be.sgerard.kafka.configuration;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +31,8 @@ public class KafkaConfiguration {
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "200");
+        properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");
 
         return new DefaultKafkaConsumerFactory<>(properties);
     }
@@ -40,6 +41,9 @@ public class KafkaConfiguration {
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         final ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+
+        // batch
+        factory.setBatchListener(true);
 
         return factory;
     }

@@ -1,6 +1,6 @@
 kafka:
   bootstrapAddress: localhost:39092
-  topic: wikimedia.recentchange
+  topic: wikimedia
   groupId: consumer-opensearch-demo
 
 opensearch:

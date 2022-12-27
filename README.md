@@ -13,7 +13,7 @@ docker-compose up -d
 
 ### Start OpenSearch
 
-Will be used for a consumer test.
+Will be used for a consumer test. You may increase the maximum memory size allocated for Docker.
 
 ````
 cd bin/opensearch

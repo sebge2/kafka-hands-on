@@ -2,9 +2,9 @@ package be.sgerard.kafka.service;
 
 import be.sgerard.kafka.configuration.OpensearchProperties;
 import be.sgerard.kafka.model.dto.WikimediaEventDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.opensearch.action.bulk.BulkRequest;
 import org.opensearch.action.index.IndexRequest;
 import org.opensearch.client.RequestOptions;
 import org.opensearch.client.RestHighLevelClient;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -23,18 +24,23 @@ public class WikimediaRecordService {
 
     private final RestHighLevelClient client;
     private final OpensearchProperties properties;
-    private final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
 
-    public void record(String event) throws IOException {
-        final WikimediaEventDto eventDto = objectMapper.readValue(event, WikimediaEventDto.class);
+    public void record(List<WikimediaEventDto> events) throws IOException {
+        if (events.isEmpty()) {
+            return;
+        }
 
-        final IndexRequest indexRequest = new IndexRequest(properties.getIndex())
-                .source(event, XContentType.JSON)
-                .id(eventDto.id());
+        final BulkRequest bulkRequest = new BulkRequest();
 
-        client.index(indexRequest, RequestOptions.DEFAULT);
+        events.forEach(event -> bulkRequest.add(
+                new IndexRequest(properties.getIndex())
+                        .source(events, XContentType.JSON)
+                        .id(event.id())
+        ));
 
-        log.info("Record inserted.");
+        client.bulk(bulkRequest, RequestOptions.DEFAULT);
+
+        log.info("{} records have been inserted.", events.size());
     }
 
     @PostConstruct
