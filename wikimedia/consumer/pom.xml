@@ -9,9 +9,9 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>kafka-handson-opensearch-consumer</artifactId>
-    <name>kafka-handson-opensearch-consumer</name>
-    <description>Kafka Hands on - Consumer with OpenSearch</description>
+    <artifactId>kafka-handson-wikimedia-consumer</artifactId>
+    <name>kafka-handson-wikimedia-consumer</name>
+    <description>Kafka Hands on - Wikimedia Consumer</description>
 
     <dependencies>
         <dependency>

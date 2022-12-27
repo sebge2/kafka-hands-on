@@ -28,8 +28,8 @@
 		<module>kafka-receiver-2-group-1</module>
 		<module>kafka-sender-with-key</module>
 		<module>kafka-sender-without-key</module>
-		<module>wikimedia-producer</module>
-		<module>kafka-handson-opensearch-consumer</module>
+		<module>wikimedia/producer</module>
+		<module>wikimedia/consumer</module>
 	</modules>
 
 	<dependencyManagement>
