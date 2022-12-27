@@ -35,7 +35,7 @@ public class WikimediaRecordService {
         events.forEach(event -> bulkRequest.add(
                 new IndexRequest(properties.getIndex())
                         .source(events, XContentType.JSON)
-                        .id(event.id())
+                        .id(event.getId())
         ));
 
         client.bulk(bulkRequest, RequestOptions.DEFAULT);
