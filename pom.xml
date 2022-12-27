@@ -32,4 +32,13 @@
 		<module>kafka-handson-opensearch-consumer</module>
 	</modules>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.opensearch.client</groupId>
+				<artifactId>opensearch-rest-high-level-client</artifactId>
+				<version>2.4.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

@@ -2,10 +2,22 @@
 
 
 ## Startup
+
+### Start Kafka
 ````
 cd bin/kafka
 docker-compose up -d
-./connect_cluster.sh
+./start.sh
+````
+
+
+### Start OpenSearch
+
+Will be used for a consumer test.
+
+````
+cd bin/opensearch
+./start.sh
 ````
 
 
