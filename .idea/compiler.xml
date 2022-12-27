@@ -8,16 +8,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="kafka-hadson-sender-without-key" />
-        <module name="wikimedia-producer" />
+        <module name="kafka-handson-wikimedia-consumer" />
         <module name="kafka-hadson-receiver-2-group-1" />
-        <module name="kafka-handson-opensearch-consumer" />
         <module name="kafka-hadson-receiver-1-group-2" />
         <module name="kafka-hadson-receiver-1-group-1" />
         <module name="kafka-hadson-sender-with-key" />
         <module name="kafka-hadson-cooperative-receiver-2" />
         <module name="kafka-hadson-cooperative-receiver-1" />
+        <module name="kafka-handson-wikimedia-producer" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="kafka-handson-opensearch-consumer" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -30,7 +33,8 @@
       <module name="kafka-hadson-sender-without-key" options="-parameters" />
       <module name="kafka-hands-on" options="" />
       <module name="kafka-handson-opensearch-consumer" options="-parameters" />
-      <module name="wikimedia-producer" options="-parameters" />
+      <module name="kafka-handson-wikimedia-consumer" options="-parameters" />
+      <module name="kafka-handson-wikimedia-producer" options="-parameters" />
     </option>
   </component>
 </project>

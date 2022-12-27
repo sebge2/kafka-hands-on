@@ -1,6 +1,6 @@
 package be.sgerard.kafka.producer;
 
-import be.sgerard.kafka.model.dto.WikimediaEventDto;
+import be.sgerard.kafka.model.dto.external.WikimediaEventDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +23,8 @@ public class WikimediaSender {
     public void send(WikimediaEventDto data) {
         logger.info("Send data");
 
-        sender.send(topic, data);
+        final var payload = new be.sgerard.kafka.model.dto.api.WikimediaEventDto(data.meta().id(), data.title(), data.user(), data.bot(), data.serverName(), data.comment());
+
+        sender.send(topic, payload);
     }
 }

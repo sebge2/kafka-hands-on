@@ -1,6 +1,6 @@
 package be.sgerard.kafka.producer;
 
-import be.sgerard.kafka.model.dto.WikimediaEventDto;
+import be.sgerard.kafka.model.dto.external.WikimediaEventDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 

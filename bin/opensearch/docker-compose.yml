@@ -8,7 +8,13 @@ services:
       - node.name=opensearch-node1
       - discovery.type=single-node
       - bootstrap.memory_lock=true # Disable JVM heap memory swapping`
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
+      - "OPENSEARCH_JAVA_OPTS=-Xms1024m -Xmx1024m" # Set min and max JVM heap sizes to at least 50% of system RAM
+    deploy:
+      resources:
+        limits:
+          memory: 1280M
+        reservations:
+          memory: 512M
     ulimits:
       memlock:
         soft: -1 # Set memlock to unlimited (no soft or hard limit)

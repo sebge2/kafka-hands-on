@@ -1,6 +1,8 @@
 package be.sgerard.kafka.service;
 
 import be.sgerard.kafka.configuration.OpensearchProperties;
+import be.sgerard.kafka.model.dto.WikimediaEventDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.opensearch.action.index.IndexRequest;
@@ -21,10 +23,14 @@ public class WikimediaRecordService {
 
     private final RestHighLevelClient client;
     private final OpensearchProperties properties;
+    private final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
 
-    public void record(String wikimediaEvent) throws IOException {
+    public void record(String event) throws IOException {
+        final WikimediaEventDto eventDto = objectMapper.readValue(event, WikimediaEventDto.class);
+
         final IndexRequest indexRequest = new IndexRequest(properties.getIndex())
-                .source(wikimediaEvent, XContentType.JSON);
+                .source(event, XContentType.JSON)
+                .id(eventDto.id());
 
         client.index(indexRequest, RequestOptions.DEFAULT);
 

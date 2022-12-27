@@ -1,8 +1,9 @@
-package be.sgerard.kafka.model.dto;
+package be.sgerard.kafka.model.dto.external;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record WikimediaEventDto(Integer id,
+public record WikimediaEventDto(WikimediaMetaDto meta,
+                                Integer id,
                                 String title,
                                 String user,
                                 boolean bot,
