@@ -21,15 +21,15 @@
 	</properties>
 
 	<modules>
-		<module>kafka-cooperative-receiver-1</module>
-		<module>kafka-cooperative-receiver-2</module>
-		<module>kafka-receiver-1-group-1</module>
-		<module>kafka-receiver-1-group-2</module>
-		<module>kafka-receiver-2-group-1</module>
-		<module>kafka-sender-with-key</module>
-		<module>kafka-sender-without-key</module>
-		<module>wikimedia/producer</module>
-		<module>wikimedia/consumer</module>
+		<module>feature/cooperative-receiver-1</module>
+		<module>feature/cooperative-receiver-2</module>
+		<module>feature/receiver-1-group-1</module>
+		<module>feature/receiver-1-group-2</module>
+		<module>feature/receiver-2-group-1</module>
+		<module>feature/sender-with-key</module>
+		<module>feature/sender-without-key</module>
+		<module>test-case/wikimedia/producer</module>
+		<module>test-case/wikimedia/consumer</module>
 	</modules>
 
 	<dependencyManagement>
