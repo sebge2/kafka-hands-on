@@ -1,6 +1,6 @@
-# File Source Demo
+# File Source - Standalone Connector
 
-This demo will fill the topic `demo-file-source-standalone` with the content of the file `demo-file.txt``
+This demo will fill the topic `demo-file-source-standalone` with the content of the file `demo-file.txt`` thanks to a standalone connector.
 
 
 ## Setup Topic
