@@ -1,11 +1,12 @@
----
-version: '2'
+version: '3.0'
+
 services:
   zookeeper-1:
     image: confluentinc/cp-zookeeper:6.1.9
     hostname: zookeeper-1
     container_name: zookeeper-1
     environment:
+      ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
@@ -16,6 +17,7 @@ services:
     hostname: zookeeper-2
     container_name: zookeeper-2
     environment:
+      ZOOKEEPER_SERVER_ID: 2
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
@@ -29,12 +31,14 @@ services:
       - 29092:29092
     environment:
       KAFKA_BROKER_ID: 1
+      KAFKA_BROKER_RACK: "r1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,zookeeper-2:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_HOST://localhost:29092,PLAINTEXT://kafka-1:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
     depends_on:
       - zookeeper-1
@@ -48,12 +52,14 @@ services:
       - 39092:39092
     environment:
       KAFKA_BROKER_ID: 2
+      KAFKA_BROKER_RACK: "r2"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,zookeeper-2:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_HOST://localhost:39092,PLAINTEXT://kafka-2:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
     depends_on:
       - zookeeper-1
@@ -61,7 +67,10 @@ services:
 
   kafka-schema-registry:
     image: confluentinc/cp-schema-registry:6.1.9
+    hostname: schema-registry
+    container_name: schema-registry
     environment:
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper-1:2181,zookeeper-2:2181
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
     depends_on:
@@ -71,3 +80,44 @@ services:
       - zookeeper-2
     ports:
       - '8081:8081'
+
+  ksql-server:
+    image: confluentinc/cp-ksql-server:5.4.10
+    hostname: ksql-server
+    container_name: ksql-server
+    ports:
+      - 8088:8088
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - zookeeper-1
+      - zookeeper-2
+      - kafka-schema-registry
+    environment:
+      KSQL_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-1:9092,PLAINTEXT://kafka-2:9092
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_KSQL_SERVICE_ID: kafka_workshop
+      KSQL_CUB_KAFKA_TIMEOUT: 300
+      KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
+      KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
+      KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:9fad0d0ee3c1d3e77eb37b4e510a8c0a77db66b1
+    container_name: kafka-ui
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - zookeeper-1
+      - zookeeper-2
+      - kafka-schema-registry
+      - ksql-server
+    ports:
+      - "8080:8080"
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=PLAINTEXT://kafka-1:9092,PLAINTEXT://kafka-2:9092
+      - KAFKA_CLUSTERS_0_READONLY=true
+      - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=schema-registry:8081
+      - KAFKA_CLUSTERS_0_KSQLDBSERVER=ksql-server:8088
