@@ -28,7 +28,7 @@ The examples require to perform the following setup:
 ````
 cd bin/
 ./start.sh
-./connect_cluster.sh
+./execute_on_first_broker.sh
 kafka-topics --bootstrap-server localhost:9092 --create --topic kafka-hands-on-range-assignor --partitions 2
 kafka-topics --bootstrap-server localhost:9092 --create --topic kafka-hands-on-cooperative-sticky-assigner --partitions 2
 kafka-topics --bootstrap-server localhost:9092 --create --topic wikimedia.recentchange --partitions 3

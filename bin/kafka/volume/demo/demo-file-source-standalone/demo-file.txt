@@ -1,0 +1,2 @@
+Hello World
+Value coming from file and read by connector
