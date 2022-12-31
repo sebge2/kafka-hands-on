@@ -7,7 +7,7 @@ This demo will fill the topic `demo-file-source-distributed` with the content of
 
 - Execute `cd ../../..`
 - Execute `./execute_on_first_broker.sh`
-- Execute `kafka-topics --create --topic demo-file-source-distributed --partitions 3 --replication-factor 1 --bootstrap-server 127.0.0.1:9092`
+- Execute `kafka-topics --create --topic demo-file-source-distributed --partitions 3 --replication-factor 1 --bootstrap-server kafka-broker-1:9092`
 - Exit container `CTRl + D`
 
 
