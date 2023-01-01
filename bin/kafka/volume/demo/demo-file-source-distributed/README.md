@@ -13,5 +13,5 @@ This demo will fill the topic `demo-file-source-distributed` with the content of
 
 ## Launch Distributed Connector
 
-- Go in `http://localhost:8080/ui/clusters/local/connectors`
-- Fill the form with the content of the file `connector-config.json` with connector name `file-stream-demo-distributed``
+- Go in `http://localhost:8080/ui/clusters/local/connectors`.
+- Fill the form with the content of the file `connector-config.json` with connector name `file-stream-demo-distributed`.
