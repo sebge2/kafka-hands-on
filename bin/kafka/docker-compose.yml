@@ -114,7 +114,7 @@ services:
       KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
 
   kafka-connect-1:
-    image: confluentinc/cp-kafka-connect-base:6.1.9
+    image: sebge2/kafka-sse-connect:1.0.0
     hostname: kafka-connect-1
     container_name: kafka-connect-1
     depends_on:
@@ -145,7 +145,7 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors"
 
   kafka-connect-2:
-    image: confluentinc/cp-kafka-connect-base:6.1.9
+    image: sebge2/kafka-sse-connect:1.0.0
     hostname: kafka-connect-2
     container_name: kafka-connect-2
     depends_on:
