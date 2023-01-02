@@ -114,7 +114,7 @@ services:
       KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
 
   kafka-connect-1:
-    image: sebge2/kafka-sse-connect:1.0.0
+    image: confluentinc/cp-kafka-connect-base:6.1.9
     hostname: kafka-connect-1
     container_name: kafka-connect-1
     depends_on:
@@ -143,9 +143,15 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors"
+    command:
+      - bash
+      - -c
+      - |
+        confluent-hub install --no-prompt cjmatta/kafka-connect-sse:1.0
+        /etc/confluent/docker/run
 
   kafka-connect-2:
-    image: sebge2/kafka-sse-connect:1.0.0
+    image: confluentinc/cp-kafka-connect-base:6.1.9
     hostname: kafka-connect-2
     container_name: kafka-connect-2
     depends_on:
@@ -174,6 +180,12 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors"
+    command:
+      - bash
+      - -c
+      - |
+        confluent-hub install --no-prompt cjmatta/kafka-connect-sse:1.0
+        /etc/confluent/docker/run
 
   kafka-ui:
     image: provectuslabs/kafka-ui:9fad0d0ee3c1d3e77eb37b4e510a8c0a77db66b1
