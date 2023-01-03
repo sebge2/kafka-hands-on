@@ -36,7 +36,7 @@ services:
     hostname: kafka-broker-1
     container_name: kafka-broker-1
     ports:
-      - 29092:29092
+      - 29092:9092
     volumes:
       - ./volume/demo:/demo
     networks:
@@ -61,7 +61,7 @@ services:
     hostname: kafka-broker-2
     container_name: kafka-broker-2
     ports:
-      - 39092:39092
+      - 39092:9092
     volumes:
       - ./volume/demo:/demo
     networks:
@@ -126,7 +126,7 @@ services:
       KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
 
   kafka-connect-1:
-    image: confluentinc/cp-kafka-connect-base:6.1.9
+    image: sebge2/kafka-connect:1.0.0
     hostname: kafka-connect-1
     container_name: kafka-connect-1
     depends_on:
@@ -157,16 +157,10 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors"
-    command:
-      - bash
-      - -c
-      - |
-        confluent-hub install --no-prompt cjmatta/kafka-connect-sse:1.0
-        confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:14.0.4
-        /etc/confluent/docker/run
+      KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
 
   kafka-connect-2:
-    image: confluentinc/cp-kafka-connect-base:6.1.9
+    image: sebge2/kafka-connect:1.0.0
     hostname: kafka-connect-2
     container_name: kafka-connect-2
     depends_on:
@@ -197,13 +191,7 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors"
-    command:
-      - bash
-      - -c
-      - |
-        confluent-hub install --no-prompt cjmatta/kafka-connect-sse:1.0
-        confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:14.0.4
-        /etc/confluent/docker/run
+      KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
 
   kafka-ui:
     image: provectuslabs/kafka-ui:9fad0d0ee3c1d3e77eb37b4e510a8c0a77db66b1
