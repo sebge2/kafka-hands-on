@@ -13,8 +13,7 @@ This demo will fill Elastic Search from the topic `demo-elasticsearch-sink-distr
 
 ## Launch Distributed Connector
 
-- Go in `http://localhost:8080/ui/clusters/local/connectors`.
-- Fill the form with the content of the file `connector-config.json` with connector name `elasticsearch-stream-demo-distributed`.
+- Execute in current directory `curl -X POST -H "Content-type:application/json" -s localhost:18083/connectors -d @connector-config.json | jq`..
 
 
 ## Emit Messages

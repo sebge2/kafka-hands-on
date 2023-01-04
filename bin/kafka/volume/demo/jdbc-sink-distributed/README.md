@@ -14,7 +14,6 @@ This demo will fill Postgresql from the topic `demo-jdbc-sink-distributed` thank
 ## Launch Distributed Connector
 
 - Execute in current directory `curl -X POST -H "Content-type:application/json" -s localhost:18083/connectors -d @connector-config.json | jq`.
-- Fill the form with the content of the file `connector-config.json` with connector name `postgresql-stream-demo-distributed`.
 
 
 ## Emit Messages
