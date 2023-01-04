@@ -1,27 +1,27 @@
-# Elasticsearch Sink - Distributed Connector
+# JDBC Sink - Distributed Connector
 
-This demo will fill Elastic Search from the topic `demo-elasticsearch-sink-distributed` thanks to a distributed sink connector.
+This demo will fill Postgresql from the topic `demo-jdbc-sink-distributed` thanks to a distributed sink connector.
 
 
 ## Setup Topic
 
 - Execute `cd ../../..`
 - Execute `./execute_on_first_broker.sh`
-- Execute `kafka-topics --create --topic demo-elasticsearch-sink-distributed --partitions 3 --replication-factor 1 --bootstrap-server kafka-broker-1:9092`
+- Execute `kafka-topics --create --topic demo-jdbc-sink-distributed --partitions 3 --replication-factor 1 --bootstrap-server kafka-broker-1:9092`
 - Exit container `CTRl + D`
 
 
 ## Launch Distributed Connector
 
-- Go in `http://localhost:8080/ui/clusters/local/connectors`.
-- Fill the form with the content of the file `connector-config.json` with connector name `elasticsearch-stream-demo-distributed`.
+- Execute in current directory `curl -X POST -H "Content-type:application/json" -s localhost:18083/connectors -d @connector-config.json | jq`.
+- Fill the form with the content of the file `connector-config.json` with connector name `postgresql-stream-demo-distributed`.
 
 
 ## Emit Messages
 
 - Execute `cd ../../..`
 - Execute `./execute_on_first_broker.sh`
-- Execute `kafka-console-producer --bootstrap-server localhost:9092 --topic demo-elasticsearch-sink-distributed`
+- Execute `kafka-console-producer --bootstrap-server localhost:9092 --topic demo-jdbc-sink-distributed`
 - Fill the message with the payload:
 ````
 {
