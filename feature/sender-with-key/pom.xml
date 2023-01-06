@@ -4,14 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>be.sgerard.handson</groupId>
-        <artifactId>kafka-hadson-parent</artifactId>
+        <artifactId>kafka-handson-feature</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>kafka-hadson-sender-with-key</artifactId>
     <name>kafka-hadson-sender-with-key</name>
-    <description>Kafka Hands on - Sender with Key</description>
+    <description>Kafka Hands on - Feature - Sender with Key</description>
 
     <dependencies>
         <dependency>

@@ -23,15 +23,8 @@
 	</properties>
 
 	<modules>
-		<module>feature/cooperative-receiver-1</module>
-		<module>feature/cooperative-receiver-2</module>
-		<module>feature/receiver-1-group-1</module>
-		<module>feature/receiver-1-group-2</module>
-		<module>feature/receiver-2-group-1</module>
-		<module>feature/sender-with-key</module>
-		<module>feature/sender-without-key</module>
+		<module>feature</module>
 		<module>test-case</module>
-		<module>feature/connector/github-connector</module>
 	</modules>
 
 	<dependencyManagement>

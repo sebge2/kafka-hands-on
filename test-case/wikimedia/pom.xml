@@ -10,7 +10,7 @@
 
 	<packaging>pom</packaging>
 	<artifactId>kafka-handson-wikimedia</artifactId>
-	<name>kafka-hadson-test-case</name>
+	<name>kafka-hadson-wikimedia</name>
 	<description>Kafka Hands on - Test Case - Wikimedia</description>
 
 	<modules>

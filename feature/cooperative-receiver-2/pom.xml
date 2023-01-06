@@ -4,14 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>be.sgerard.handson</groupId>
-        <artifactId>kafka-hadson-parent</artifactId>
+        <artifactId>kafka-handson-feature</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>kafka-hadson-cooperative-receiver-2</artifactId>
     <name>kafka-hadson-cooperative-receiver-2</name>
-    <description>Kafka Hands on - Cooperative Receiver 2</description>
+    <description>Kafka Hands on - Feature - Cooperative Receiver 2</description>
 
     <dependencies>
         <dependency>
