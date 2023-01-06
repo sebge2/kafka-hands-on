@@ -3,16 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>kafka-hadson-parent</artifactId>
+        <artifactId>kafka-handson-wikimedia</artifactId>
         <groupId>be.sgerard.handson</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>kafka-handson-wikimedia-producer</artifactId>
     <name>kafka-handson-wikimedia-producer</name>
-    <description>Kafka Hands on - Wikimedia Producer</description>
+    <description>Kafka Hands on - Test Case - Wikimedia - Producer</description>
 
     <dependencies>
         <dependency>

@@ -3,15 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
+        <artifactId>kafka-handson-wikimedia</artifactId>
         <groupId>be.sgerard.handson</groupId>
-        <artifactId>kafka-hadson-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../../pom.xml</relativePath>
     </parent>
 
     <artifactId>kafka-handson-wikimedia-consumer</artifactId>
     <name>kafka-handson-wikimedia-consumer</name>
-    <description>Kafka Hands on - Wikimedia Consumer</description>
+    <description>Kafka Hands on - Wikimedia - Consumer</description>
 
     <dependencies>
         <dependency>

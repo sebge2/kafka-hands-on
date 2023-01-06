@@ -30,8 +30,7 @@
 		<module>feature/receiver-2-group-1</module>
 		<module>feature/sender-with-key</module>
 		<module>feature/sender-without-key</module>
-		<module>test-case/wikimedia/producer</module>
-		<module>test-case/wikimedia/consumer</module>
+		<module>test-case</module>
 		<module>feature/connector/github-connector</module>
 	</modules>
 
