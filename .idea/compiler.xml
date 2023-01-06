@@ -10,6 +10,7 @@
         <module name="kafka-hadson-sender-without-key" />
         <module name="kafka-handson-wikimedia-consumer" />
         <module name="kafka-hadson-receiver-2-group-1" />
+        <module name="my-source-connector" />
         <module name="kafka-hadson-receiver-1-group-2" />
         <module name="kafka-hadson-receiver-1-group-1" />
         <module name="kafka-hadson-sender-with-key" />
@@ -35,6 +36,7 @@
       <module name="kafka-handson-opensearch-consumer" options="-parameters" />
       <module name="kafka-handson-wikimedia-consumer" options="-parameters" />
       <module name="kafka-handson-wikimedia-producer" options="-parameters" />
+      <module name="my-source-connector" options="-parameters" />
     </option>
   </component>
 </project>

@@ -53,3 +53,8 @@ This demo will fill Postgresql from the topic `demo-jdbc-sink-distributed` thank
 	}
 }
 ````
+
+
+# Links
+
+[Documentation](https://docs.confluent.io/kafka-connectors/jdbc/current/sink-connector/overview.html)
