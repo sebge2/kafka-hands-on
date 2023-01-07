@@ -11,8 +11,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 22181:2181
-    volumes:
-      - ./volume/demo:/demo
     networks:
       - hands-on-network
 
@@ -26,8 +24,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 32181:2181
-    volumes:
-      - ./volume/demo:/demo
     networks:
       - hands-on-network
 
@@ -37,8 +33,6 @@ services:
     container_name: kafka-broker-1
     ports:
       - 29092:9092
-    volumes:
-      - ./volume/demo:/demo
     networks:
       - hands-on-network
     depends_on:
@@ -62,8 +56,6 @@ services:
     container_name: kafka-broker-2
     ports:
       - 39092:9092
-    volumes:
-      - ./volume/demo:/demo
     networks:
       - hands-on-network
     depends_on:
@@ -105,8 +97,6 @@ services:
     container_name: ksql-server
     ports:
       - 8088:8088
-    volumes:
-      - ./volume/demo:/demo
     networks:
       - hands-on-network
     depends_on:
@@ -139,6 +129,7 @@ services:
       - '18083:8083'
     volumes:
       - ./volume/demo:/demo
+      - ./volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:
@@ -156,7 +147,7 @@ services:
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
-      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
       KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
 
   kafka-connect-2:
@@ -173,6 +164,7 @@ services:
       - '28083:8083'
     volumes:
       - ./volume/demo:/demo
+      - ./volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:
@@ -190,7 +182,7 @@ services:
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
-      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
       KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
 
   kafka-ui:
@@ -205,8 +197,6 @@ services:
       - ksql-server
     ports:
       - "8080:8080"
-    volumes:
-      - ./volume/demo:/demo
     networks:
       - hands-on-network
     environment:
