@@ -3,13 +3,14 @@ package be.sgerard.kafka.utils;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
- * Bunch of utility functions for timestamps.
+ * Bunch of utility functions for time.
  */
-public class TimestampUtils {
+public class TimeUtils {
 
-    private TimestampUtils() {
+    private TimeUtils() {
     }
 
     /**
@@ -27,5 +28,15 @@ public class TimestampUtils {
      */
     public static Instant nowPlusYear(int year) {
         return ZonedDateTime.now().plusYears(year).toInstant();
+    }
+
+    /**
+     * Takes the latest timestamp.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public static Instant takeLatest(Instant... instants) {
+        return Stream.of(instants)
+                .max(Instant::compareTo)
+                .get();
     }
 }

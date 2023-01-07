@@ -5,7 +5,7 @@ import org.apache.kafka.common.config.ConfigException;
 
 import java.time.format.DateTimeParseException;
 
-import static be.sgerard.kafka.utils.TimestampUtils.toInstant;
+import static be.sgerard.kafka.utils.TimeUtils.toInstant;
 
 public class TimestampValidator implements ConfigDef.Validator {
 

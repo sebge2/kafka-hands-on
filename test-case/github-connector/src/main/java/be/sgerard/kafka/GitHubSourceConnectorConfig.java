@@ -12,8 +12,8 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 
-import static be.sgerard.kafka.utils.TimestampUtils.nowPlusYear;
-import static be.sgerard.kafka.utils.TimestampUtils.toInstant;
+import static be.sgerard.kafka.utils.TimeUtils.nowPlusYear;
+import static be.sgerard.kafka.utils.TimeUtils.toInstant;
 
 /**
  * GitHub {@link AbstractConfig connector configuration}.
