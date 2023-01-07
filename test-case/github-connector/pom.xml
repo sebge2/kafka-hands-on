@@ -27,11 +27,12 @@
             <groupId>com.mashape.unirest</groupId>
             <artifactId>unirest-java</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -76,6 +77,21 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
@@ -100,7 +116,7 @@
                         <phase>install</phase>
                         <configuration>
                             <target>
-                                <copy file="target/${project.artifactId}-${project.version}-package/share/java/${project.artifactId}/${project.artifactId}-${project.version}.jar" tofile="../../bin/kafka/volume/connectors/${project.artifactId}.jar"/>
+                                <copy file="${project.build.directory}/${project.artifactId}-${project.version}-package/share/java/${project.build.finalName}.jar" tofile="../../bin/kafka/volume/connectors/${project.artifactId}.jar"/>
                             </target>
                         </configuration>
                         <goals>

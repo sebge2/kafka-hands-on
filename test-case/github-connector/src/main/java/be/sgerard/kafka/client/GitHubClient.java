@@ -5,6 +5,7 @@ import be.sgerard.kafka.model.GitHubAccessLimit;
 import be.sgerard.kafka.model.GitHubIssueResponse;
 import be.sgerard.kafka.model.external.IssueDto;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -64,7 +65,7 @@ public class GitHubClient {
         try {
             GetRequest unirest = Unirest.get(url);
 
-            if (!config.getAuthenticationUsername().isEmpty() && !config.getAuthenticationUsername().isEmpty()) {
+            if ((config.getAuthenticationUsername() != null) && (config.getAuthenticationUsername() != null)) {
                 unirest = unirest.basicAuth(config.getAuthenticationUsername(), config.getAuthenticationPassword());
             }
 
@@ -79,6 +80,7 @@ public class GitHubClient {
      */
     private List<IssueDto> mapIssues(InputStream stream) {
         try {
+
             return objectMapper.readValue(stream, new TypeReference<List<IssueDto>>() {
             });
         } catch (IOException e) {
