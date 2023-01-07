@@ -30,15 +30,20 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>connect-api</artifactId>
+				<version>${kafka.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.opensearch.client</groupId>
 				<artifactId>opensearch-rest-high-level-client</artifactId>
 				<version>2.4.1</version>
 			</dependency>
-
 			<dependency>
-				<groupId>org.apache.kafka</groupId>
-				<artifactId>connect-api</artifactId>
-				<version>${kafka.version}</version>
+				<groupId>com.mashape.unirest</groupId>
+				<artifactId>unirest-java</artifactId>
+				<version>1.4.9</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
