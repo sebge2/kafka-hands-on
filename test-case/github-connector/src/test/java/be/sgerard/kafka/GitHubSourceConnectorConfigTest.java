@@ -13,17 +13,6 @@ public class GitHubSourceConnectorConfigTest {
 
     private final ConfigDef configDef = GitHubSourceConnectorConfig.conf();
 
-    private Map<String, String> initialConfig() {
-        final Map<String, String> baseProps = new HashMap<>();
-        baseProps.put(GITHUB_OWNER, "foo");
-        baseProps.put(GITHUB_REPOSITORY, "bar");
-        baseProps.put(SINCE_CONFIG, "2017-04-26T01:23:45Z");
-        baseProps.put(BATCH_SIZE_CONFIG, "100");
-        baseProps.put(TOPIC, "github-issues");
-
-        return baseProps;
-    }
-
     @Test
     public void initialConfigIsValid() {
         assert (configDef.validate(initialConfig())
@@ -86,5 +75,16 @@ public class GitHubSourceConnectorConfigTest {
         final ConfigValue configValue = configDef.validateAll(config).get(GITHUB_AUTHENTICATION_PASSWORD);
 
         assert (configValue.errorMessages().size() == 0);
+    }
+
+    private Map<String, String> initialConfig() {
+        final Map<String, String> baseProps = new HashMap<>();
+        baseProps.put(GITHUB_OWNER, "foo");
+        baseProps.put(GITHUB_REPOSITORY, "bar");
+        baseProps.put(SINCE_CONFIG, "2017-04-26T01:23:45Z");
+        baseProps.put(BATCH_SIZE_CONFIG, "100");
+        baseProps.put(TOPIC, "github-issues");
+
+        return baseProps;
     }
 }
