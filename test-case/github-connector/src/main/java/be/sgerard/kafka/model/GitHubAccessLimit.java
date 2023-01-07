@@ -20,11 +20,25 @@ public class GitHubAccessLimit {
      */
     public static final int SLEEP_THRESHOLD = 10;
 
+    /**
+     * Returns limits based on the current response headers.
+     */
     public static GitHubAccessLimit fromHeaders(Headers headers) {
         return new GitHubAccessLimit(
                 Integer.valueOf(headers.getFirst("X-RateLimit-Limit")),
                 Integer.valueOf(headers.getFirst("X-RateLimit-Remaining")),
                 Instant.ofEpochSecond(Long.parseLong(headers.getFirst("X-RateLimit-Reset")))
+        );
+    }
+
+    /**
+     * Returns unknown limits.
+     */
+    public static GitHubAccessLimit unknown() {
+        return new GitHubAccessLimit(
+                9999,
+                9999,
+                Instant.MAX
         );
     }
 
