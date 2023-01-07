@@ -117,7 +117,7 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
     /**
      * @see #GITHUB_AUTHENTICATION_USERNAME
      */
-    public String getAuthUsername() {
+    public String getAuthenticationUsername() {
         return this.getString(GITHUB_AUTHENTICATION_USERNAME);
     }
 
