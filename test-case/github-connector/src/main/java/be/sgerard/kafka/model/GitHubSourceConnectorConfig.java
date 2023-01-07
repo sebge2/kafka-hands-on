@@ -1,4 +1,4 @@
-package be.sgerard.kafka;
+package be.sgerard.kafka.model;
 
 import be.sgerard.kafka.validator.BatchSizeValidator;
 import be.sgerard.kafka.validator.TimestampValidator;

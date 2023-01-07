@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Getter
-public class TooManyRequestsException extends Exception {
+public class TooManyRequestsException extends RuntimeException {
 
     /**
      * {@link GitHubAccessLimit Access} limit to the GitHub API.

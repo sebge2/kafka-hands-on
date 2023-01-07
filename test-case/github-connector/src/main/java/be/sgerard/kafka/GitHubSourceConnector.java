@@ -3,6 +3,7 @@ package be.sgerard.kafka;
 import java.util.List;
 import java.util.Map;
 
+import be.sgerard.kafka.model.GitHubSourceConnectorConfig;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.source.SourceConnector;

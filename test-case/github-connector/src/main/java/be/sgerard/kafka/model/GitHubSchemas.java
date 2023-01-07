@@ -1,4 +1,4 @@
-package be.sgerard.kafka;
+package be.sgerard.kafka.model;
 
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaBuilder;

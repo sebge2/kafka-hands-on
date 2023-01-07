@@ -1,5 +1,6 @@
 package be.sgerard.kafka;
 
+import be.sgerard.kafka.model.GitHubSourceConnectorConfig;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.config.ConfigValue;
 import org.junit.Test;
@@ -7,7 +8,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static be.sgerard.kafka.GitHubSourceConnectorConfig.*;
+import static be.sgerard.kafka.model.GitHubSourceConnectorConfig.*;
 
 public class GitHubSourceConnectorConfigTest {
 

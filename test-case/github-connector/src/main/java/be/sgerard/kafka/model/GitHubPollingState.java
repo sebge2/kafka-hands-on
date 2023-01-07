@@ -1,6 +1,5 @@
-package be.sgerard.kafka;
+package be.sgerard.kafka.model;
 
-import be.sgerard.kafka.model.GitHubAccessLimit;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.kafka.connect.source.SourceTaskContext;
@@ -9,10 +8,10 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-import static be.sgerard.kafka.GitHubSchemas.NEXT_PAGE_FIELD;
-import static be.sgerard.kafka.GitHubSchemas.UPDATED_AT_FIELD;
-import static be.sgerard.kafka.GitHubSourceConnectorConfig.GITHUB_OWNER;
-import static be.sgerard.kafka.GitHubSourceConnectorConfig.GITHUB_REPOSITORY;
+import static be.sgerard.kafka.model.GitHubSchemas.NEXT_PAGE_FIELD;
+import static be.sgerard.kafka.model.GitHubSchemas.UPDATED_AT_FIELD;
+import static be.sgerard.kafka.model.GitHubSourceConnectorConfig.GITHUB_OWNER;
+import static be.sgerard.kafka.model.GitHubSourceConnectorConfig.GITHUB_REPOSITORY;
 import static be.sgerard.kafka.utils.TimeUtils.takeLatest;
 
 /**

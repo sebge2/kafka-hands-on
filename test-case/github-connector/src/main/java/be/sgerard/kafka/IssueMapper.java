@@ -1,5 +1,6 @@
 package be.sgerard.kafka;
 
+import be.sgerard.kafka.model.GitHubSourceConnectorConfig;
 import be.sgerard.kafka.model.external.IssueDto;
 import be.sgerard.kafka.model.external.PullRequestDto;
 import be.sgerard.kafka.model.external.UserDto;
@@ -7,7 +8,7 @@ import org.apache.kafka.connect.data.Struct;
 
 import java.util.Optional;
 
-import static be.sgerard.kafka.GitHubSchemas.*;
+import static be.sgerard.kafka.model.GitHubSchemas.*;
 
 public class IssueMapper {
 

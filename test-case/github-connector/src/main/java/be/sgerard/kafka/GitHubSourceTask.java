@@ -3,6 +3,8 @@ package be.sgerard.kafka;
 import be.sgerard.kafka.client.GitHubClient;
 import be.sgerard.kafka.client.TooManyRequestsException;
 import be.sgerard.kafka.model.GitHubIssueResponse;
+import be.sgerard.kafka.model.GitHubPollingState;
+import be.sgerard.kafka.model.GitHubSourceConnectorConfig;
 import be.sgerard.kafka.model.external.IssueDto;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.apache.kafka.connect.source.SourceTask;
@@ -13,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static be.sgerard.kafka.GitHubSchemas.*;
-import static be.sgerard.kafka.GitHubSourceConnectorConfig.*;
+import static be.sgerard.kafka.model.GitHubSchemas.*;
+import static be.sgerard.kafka.model.GitHubSourceConnectorConfig.*;
 
 /**
  * {@link SourceTask Task} polling GitHub issues.

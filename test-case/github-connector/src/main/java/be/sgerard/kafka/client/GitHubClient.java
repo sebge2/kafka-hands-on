@@ -1,6 +1,6 @@
 package be.sgerard.kafka.client;
 
-import be.sgerard.kafka.GitHubSourceConnectorConfig;
+import be.sgerard.kafka.model.GitHubSourceConnectorConfig;
 import be.sgerard.kafka.model.GitHubAccessLimit;
 import be.sgerard.kafka.model.GitHubIssueResponse;
 import be.sgerard.kafka.model.external.IssueDto;
@@ -35,7 +35,7 @@ public class GitHubClient {
     /**
      * Returns all {@link GitHubIssueResponse issues} created after the specified date and for the specified page.
      */
-    public GitHubIssueResponse getIssues(Integer page, Instant since) throws TooManyRequestsException {
+    public GitHubIssueResponse getIssues(Integer page, Instant since) throws TooManyRequestsException, RetriableException, ConnectException {
         final String url = config.buildGitHubIssuesUrl(page, since);
         final HttpResponse<InputStream> response = callApi(url);
         final GitHubAccessLimit limit = GitHubAccessLimit.fromHeaders(response.getHeaders());
