@@ -15,6 +15,11 @@ import java.time.Instant;
 @ToString
 public class GitHubAccessLimit {
 
+    /**
+     * The remaining call under which a sleep is needed.
+     */
+    public static final int SLEEP_THRESHOLD = 10;
+
     public static GitHubAccessLimit fromHeaders(Headers headers) {
         return new GitHubAccessLimit(
                 Integer.valueOf(headers.getFirst("X-RateLimit-Limit")),
@@ -37,4 +42,18 @@ public class GitHubAccessLimit {
      * Time when the limit reset.
      */
     private final Instant rateReset;
+
+    /**
+     * Returns whether sleeping is needed.
+     */
+    public boolean isSleepNeeded() {
+        return (rateRemaining <= SLEEP_THRESHOLD) && (rateRemaining > 0);
+    }
+
+    /**
+     * Returns the number of milliseconds to sleep.
+     */
+    public long getSleepingTimeInMs() {
+        return (long) Math.ceil((double) (rateReset.getEpochSecond() - Instant.now().getEpochSecond()) / rateRemaining) * 1000L;
+    }
 }

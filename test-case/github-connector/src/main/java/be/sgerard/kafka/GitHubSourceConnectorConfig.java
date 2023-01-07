@@ -61,6 +61,11 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
     public static final String BATCH_SIZE_CONFIG = "batch.size";
 
     /**
+     * Default value for the {@link #BATCH_SIZE_CONFIG batch size}.
+     */
+    public static final int DEFAULT_BATCH_SIZE_VALUE = 100;
+
+    /**
      * Returns the {@link ConfigDef configuration} of this connector.
      */
     public static ConfigDef conf() {
@@ -75,7 +80,7 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
 
                 .define(SINCE_CONFIG, Type.STRING, nowPlusYear(-1).toString(), new TimestampValidator(), Importance.HIGH, "Only issues updated at or after this time are returned.\nThis is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.\nDefaults to a year from first launch.")
 
-                .define(BATCH_SIZE_CONFIG, Type.INT, 100, new BatchSizeValidator(), Importance.LOW, "Optional number of data points to retrieve at a time. Defaults to 100 (max value)");
+                .define(BATCH_SIZE_CONFIG, Type.INT, DEFAULT_BATCH_SIZE_VALUE, new BatchSizeValidator(), Importance.LOW, "Optional number of data points to retrieve at a time. Defaults to 100 (max value)");
     }
 
     public GitHubSourceConnectorConfig(ConfigDef config, Map<String, String> parsedConfig) {
