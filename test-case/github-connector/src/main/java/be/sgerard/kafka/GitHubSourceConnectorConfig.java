@@ -23,7 +23,7 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
     /**
      * Kafka topic to write to.
      */
-    public static final String TOPIC = "TOPIC";
+    public static final String TOPIC = "topic";
 
     /**
      * Owner of the GitHub repository you want to follow.
@@ -60,15 +60,9 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
      */
     public static final String BATCH_SIZE_CONFIG = "batch.size";
 
-
-    public GitHubSourceConnectorConfig(ConfigDef config, Map<String, String> parsedConfig) {
-        super(config, parsedConfig);
-    }
-
-    public GitHubSourceConnectorConfig(Map<String, String> parsedConfig) {
-        this(conf(), parsedConfig);
-    }
-
+    /**
+     * Returns the {@link ConfigDef configuration} of this connector.
+     */
     public static ConfigDef conf() {
         return new ConfigDef()
                 .define(TOPIC, Type.STRING, Importance.HIGH, "Kafka topic to write to.")
@@ -77,11 +71,19 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
                 .define(GITHUB_REPOSITORY, Type.STRING, Importance.HIGH, "The GitHub repository you want to follow.")
                 .define(GITHUB_AUTHENTICATION_USERNAME, Type.STRING, null, Importance.HIGH, "Optional GitHub Username to authenticate calls.")
                 .define(GITHUB_AUTHENTICATION_PASSWORD, Type.PASSWORD, null, Importance.HIGH, "Optional GitHub Password to authenticate calls.")
-                .define(GITHUB_URL, Type.STRING, "github.com", Importance.LOW, "Optional URL of GitHub.")
+                .define(GITHUB_URL, Type.STRING, "https://api.github.com", Importance.LOW, "Optional URL of GitHub.")
 
                 .define(SINCE_CONFIG, Type.STRING, nowPlusYear(-1).toString(), new TimestampValidator(), Importance.HIGH, "Only issues updated at or after this time are returned.\nThis is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.\nDefaults to a year from first launch.")
 
                 .define(BATCH_SIZE_CONFIG, Type.INT, 100, new BatchSizeValidator(), Importance.LOW, "Optional number of data points to retrieve at a time. Defaults to 100 (max value)");
+    }
+
+    public GitHubSourceConnectorConfig(ConfigDef config, Map<String, String> parsedConfig) {
+        super(config, parsedConfig);
+    }
+
+    public GitHubSourceConnectorConfig(Map<String, String> parsedConfig) {
+        this(conf(), parsedConfig);
     }
 
     /**
@@ -140,5 +142,20 @@ public class GitHubSourceConnectorConfig extends AbstractConfig {
      */
     public Integer getBatchSize() {
         return this.getInt(BATCH_SIZE_CONFIG);
+    }
+
+    /**
+     * Returns the URL to use to retrieve issues from GitHub.
+     */
+    public String buildGitHubIssuesUrl(Integer page, Instant since) {
+        return String.format(
+                "%s/repos/%s/%s/issues?page=%s&per_page=%s&since=%s&state=all&direction=asc&sort=updated",
+                getGithubUrl(),
+                getGithubOwner(),
+                getGithubRepository(),
+                page,
+                getBatchSize(),
+                since.toString()
+        );
     }
 }
