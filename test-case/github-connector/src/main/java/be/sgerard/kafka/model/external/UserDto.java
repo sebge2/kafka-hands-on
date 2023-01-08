@@ -1,32 +1,17 @@
 package be.sgerard.kafka.model.external;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
 
     private String login;
-    private Integer id;
-    private String avatarUrl;
-    private String gravatarId;
-    private String url;
-    private String htmlUrl;
-    private String followersUrl;
-    private String followingUrl;
-    private String gistsUrl;
-    private String starredUrl;
-    private String subscriptionsUrl;
-    private String organizationsUrl;
-    private String reposUrl;
-    private String eventsUrl;
-    private String receivedEventsUrl;
-    private String type;
-    private Boolean siteAdmin;
-    private Map<String, Object> additionalProperties = new HashMap<>();
 
+    private Integer id;
+
+    private String url;
 }
