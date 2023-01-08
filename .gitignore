@@ -1,3 +1,4 @@
 **/target
 **/*.iml
 bin/kafka/volume/connectors/*
+**/dependency-reduced-pom.xml
