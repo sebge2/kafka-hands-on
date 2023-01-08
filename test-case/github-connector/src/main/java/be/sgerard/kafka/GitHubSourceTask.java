@@ -51,7 +51,7 @@ public class GitHubSourceTask extends SourceTask {
     public List<SourceRecord> poll() throws InterruptedException {
         log.debug("Polling issues.");
 
-        sleepIfNeed();
+        sleepIfNeeded();
 
         final List<SourceRecord> records = new ArrayList<>();
 
@@ -87,7 +87,7 @@ public class GitHubSourceTask extends SourceTask {
         try {
             final GitHubIssueResponse issues = client.getIssues(currentState.getNextPageToVisit(), currentState.getNextQuerySince());
 
-            log.info(String.format("Fetched %s record(s).", issues.getIssues().size()));
+            log.info(String.format("Fetched %s ìssues(s), current page=%s, next query since=%s", issues.getIssues().size(), currentState.getNextPageToVisit(), currentState.getNextQuerySince()));
 
             return issues;
         } catch (TooManyRequestsException e) {
@@ -130,12 +130,12 @@ public class GitHubSourceTask extends SourceTask {
     /**
      * Sleeps if the rate limit is reached or approaching.
      */
-    private void sleepIfNeed() throws InterruptedException {
+    private void sleepIfNeeded() throws InterruptedException {
         if (!currentState.getAccessLimit().isSleepNeeded()) {
             return;
         }
 
-        log.info(String.format("Approaching limit soon, you have %s requests left.", currentState.getAccessLimit().getRateRemaining()));
+        log.debug(String.format("Approaching limit soon, you have %s requests left.", currentState.getAccessLimit().getRateRemaining()));
         sleep();
     }
 

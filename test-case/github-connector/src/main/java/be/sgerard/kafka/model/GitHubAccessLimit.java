@@ -38,7 +38,7 @@ public class GitHubAccessLimit {
         return new GitHubAccessLimit(
                 9999,
                 9999,
-                Instant.MAX
+                Instant.now()
         );
     }
 

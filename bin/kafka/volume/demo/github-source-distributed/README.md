@@ -1,6 +1,6 @@
 # GitHub Source - Distributed Connector
 
-This demo will fill the topic `demo-http-source-distributed` with GitHub issues thanks to a standalone connector. This connector must be
+This demo will fill the topic `github-kubernetes` with GitHub issues thanks to a distributed connector. This connector must be
 installed before running the Kafka cluster. The connector is part of this [project](../../../../../test-case/github-connector).
 
 

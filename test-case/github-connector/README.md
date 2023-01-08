@@ -1,5 +1,11 @@
-Welcome to your new Kafka Connect connector!
+# GitHub Source Connector
 
+
+## Description
+
+This project is based on the following [training](https://github.com/simplesteph/kafka-connect-github-source/tree/v1.1). 
+
+The skeleton has been generated thanks to the Maven archetype:
 
 ``````
 mvn archetype:generate -DarchetypeGroupId=io.confluent.maven -DarchetypeArtifactId=kafka-connect-quickstart -DarchetypeVersion=0.10.0.0 \
@@ -9,10 +15,8 @@ mvn archetype:generate -DarchetypeGroupId=io.confluent.maven -DarchetypeArtifact
 -Dversion=1.0-SNAPSHOT
 ``````
 
-# Running in development
 
-```
-mvn clean package
-export CLASSPATH="$(find target/ -type f -name '*.jar'| grep '\-package' | tr '\n' ':')"
-$CONFLUENT_HOME/bin/connect-standalone $CONFLUENT_HOME/etc/schema-registry/connect-avro-standalone.properties config/MySourceConnector.properties
-```
+## Installation
+
+Please run `mvn clean install` before starting the Kafka cluster. If the cluster is already running, please restart
+Kafka connect nodes.
