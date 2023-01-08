@@ -66,7 +66,7 @@ public class GitHubSourceTask extends SourceTask {
         if (issues.getIssues().size() >= DEFAULT_BATCH_SIZE_VALUE) {
             currentState.incrementPageToVisit();
         } else {
-            // nextQuerySince = lastUpdatedAt.plusSeconds(1);
+            // nextQuerySince = lastUpdatedAt.plusSeconds(1); TODO unsure of this in the original code?
 
             currentState.resetPageToVisit();
 
