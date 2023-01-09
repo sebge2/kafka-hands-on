@@ -21,30 +21,46 @@ cd bin/opensearch
 ````
 
 
-## Setup
+### Start OpenSearch
 
-The examples require to perform the following setup:
+Will be used for a consumer/producer test. You may increase the maximum memory size allocated for Docker.
 
 ````
-cd bin/
+cd bin/opensearch
 ./start.sh
-./execute_on_first_broker.sh
-kafka-topics --bootstrap-server localhost:9092 --create --topic kafka-hands-on-range-assignor --partitions 2
-kafka-topics --bootstrap-server localhost:9092 --create --topic kafka-hands-on-cooperative-sticky-assigner --partitions 2
-kafka-topics --bootstrap-server localhost:9092 --create --topic wikimedia.recentchange --partitions 3
+````
+
+
+### Start Postgresql
+
+Will be used for a consumer/producer test. You may increase the maximum memory size allocated for Docker.
+
+````
+cd bin/postgresql
+./start.sh
 ````
 
 
 ## Commands
 
+The following commands can be executed on the broker (first, or second broker):
+
+````
+cd bin/kafka
+./start.sh
+./execute_on_first_broker.sh
+````
+
+
 ### Kafka Topics Command
 
 ````
 kafka-topics --bootstrap-server localhost:9092 --list
-kafka-topics --bootstrap-server localhost:9092 --create --topic test --partitions 3 --replication-factor 2
+kafka-topics --bootstrap-server localhost:9092 --create --topic test --partitions 3 --replication-factor 1
 kafka-topics --bootstrap-server localhost:9092 --create --topic --describe test
 kafka-topics --bootstrap-server localhost:9092 --delete --topic test
 ````
+
 
 ### Kafka Console Producer
 
@@ -73,6 +89,33 @@ kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-
 kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-offsets --shift-by 2 --execute --topic test
 kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-offsets --shift-by -2 --execute --topic test
 kafka-consumer-groups --bootstrap-server localhost:9092 --group  group1 --reset-offsets --shift-by -2 --execute --all-topics
+````
+
+
+### KSQL - Print Command
+
+In the first terminal:
+
+````
+cd bin/kafka
+./start.sh
+./execute_on_first_broker.sh
+kafka-topics --bootstrap-server localhost:9092 --create --topic users --partitions 3 --replication-factor 1
+
+# After start printing users in the second terminal:
+kafka-console-producer --bootstrap-server localhost:9092 --topic users
+````
+
+In the second terminal:
+
+````
+./execute_on_ksql.sh
+ksql
+
+# In KSQL command line:
+print 'users';
+
+# Start the producer in the first terminal
 ````
 
 
