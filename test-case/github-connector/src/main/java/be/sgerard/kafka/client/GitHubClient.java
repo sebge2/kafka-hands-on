@@ -5,7 +5,6 @@ import be.sgerard.kafka.model.GitHubAccessLimit;
 import be.sgerard.kafka.model.GitHubIssueResponse;
 import be.sgerard.kafka.model.external.IssueDto;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -36,6 +35,7 @@ public class GitHubClient {
     /**
      * Returns all {@link GitHubIssueResponse issues} created after the specified date and for the specified page.
      */
+    @SuppressWarnings("DuplicateThrows")
     public GitHubIssueResponse getIssues(Integer page, Instant since) throws TooManyRequestsException, RetriableException, ConnectException {
         final String url = config.buildGitHubIssuesUrl(page, since);
         final HttpResponse<InputStream> response = callApi(url);
@@ -80,7 +80,6 @@ public class GitHubClient {
      */
     private List<IssueDto> mapIssues(InputStream stream) {
         try {
-
             return objectMapper.readValue(stream, new TypeReference<List<IssueDto>>() {
             });
         } catch (IOException e) {
