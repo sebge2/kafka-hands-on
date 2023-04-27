@@ -1,6 +1,6 @@
 # REST Proxy
 
-[API](https://docs.confluent.io/platform/current/kafka-rest/api.html). The following commands must be executed in this folder.
+The following commands must be executed in this folder.
 
 
 ## List Topics
@@ -85,3 +85,8 @@ JSON consumer:
 ````
 curl -X DELETE  -H "Content-Type: application/vnd.kafka.v2+json" http://localhost:8082/consumers/my-binary-consumer/instances/my-binary-consumer | jq
 ````
+
+
+## Links
+
+- [API](https://docs.confluent.io/platform/current/kafka-rest/api.html).
