@@ -1,5 +1,8 @@
 # Kafka Hands On
 
+I created this project for saving code written in the scope of the following [course](https://www.udemy.com/course/apache-kafka).
+Afterwards, I added documentation helping me to pass the certification.
+
 
 ## Startup
 
@@ -34,29 +37,15 @@ cd bin/postgresql
 ````
 
 
-## Commands
+## Documentation
 
-[Go here](./topics-command.md)
+You can find documentation in the following sections.
 
-
-## Avro
-
-[Go here](doc/avro/readme.md)
-
-
-## REST Proxy
-
-[Go here](doc/rest-proxy/readme.md)
-
-
-## Stream
-
-[Go here](doc/stream/readme.md)
-
-
-## KSQL
-
-[Go here](doc/ksql/readme.md)
+- [Commands managing topics](./topics-command.md)
+- [Avro](doc/avro/readme.md)
+- [REST Proxy](doc/rest-proxy/readme.md)
+- [Stream](doc/stream/readme.md)
+- [KSQL](doc/ksql/readme.md)
 
 
 ## Links

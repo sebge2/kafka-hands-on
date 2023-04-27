@@ -18,7 +18,6 @@ terraform apply
 You can now use this EC2 address to connect to your machine (replace `[EC2_INSTANCE]`):
 `````
 ssh -i aws_key ubuntu@[EC2_INSTANCE]
-
 `````
 
 Go in the MSK console in your AWS administration console and copy paste the address of the bootstrap server (in client information). 
