@@ -1,5 +1,5 @@
 kafka:
-  bootstrapAddress: localhost:39092
+  bootstrapAddress: localhost:19092
   topic: wikimedia
   groupId: consumer-opensearch-demo
 

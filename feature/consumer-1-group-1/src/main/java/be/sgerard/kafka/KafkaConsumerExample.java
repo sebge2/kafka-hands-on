@@ -14,7 +14,7 @@ public class KafkaConsumerExample {
     public static void main(String[] args) {
         final Properties properties = new Properties();
 
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:39092");
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092");
 
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
