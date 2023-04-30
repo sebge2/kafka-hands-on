@@ -25,6 +25,7 @@ public class KafkaConfiguration {
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        properties.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, KafkaInterceptor.class.getName());
 
         return new DefaultKafkaProducerFactory<>(properties);
     }

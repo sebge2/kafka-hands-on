@@ -9,14 +9,14 @@
   - `value.serializer`: how to serialize values into byte arrays.
 - We provide the record to the `KafkaProducer#send()` method (supports multi-threading access).
 - The `KafkaProducer`:
-  - calls `Interceptor`
+  - invokes the interceptor `ProducerInterceptor#onSend(ProducerRecord)` that can update the entire record
   - retrieves information about partitions related to the specified topic
   - serializes the key using the `key.serializer` into byte arrays
   - serializes the value using the `value.serializer` into byte arrays
-  - if we didn't specify a partition, the `Partitionner` returns the partition number, otherwise the specified partition is used 
-  - the record is added to a batch of records that will be sent
+  - if we didn't specify a partition, invokes the `Partitionner` that returns the partition number, otherwise it uses the specified partition 
+  - adds the record to a batch of records that will be sent
   - uses a separate thread to send batches to the right broker
-  - a `Future` object is returned.
+  - returns a `Future` object.
   
 Once the `Future`is returned to the caller. There are 3 ways of interacting with it:
   - _Fire-and-forget send_: we don't care if the message arrived successfully, we don't on anything with this `Future`.
