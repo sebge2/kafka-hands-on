@@ -20,10 +20,13 @@
   - retrieves information about partitions related to the specified topic
   - serializes the key using the `key.serializer` into byte arrays
   - serializes the value using the `value.serializer` into byte arrays
-  - if we didn't specify a partition, invokes the `Partitionner` that returns the partition number, otherwise it uses the specified partition 
-  - adds the record to a batch of records that will be sent
+  - if we didn't specify a partition, invokes the `Partitionner` that returns the partition number, otherwise it uses the specified partition
+  - if _compression.type_ is defined (snappy, gzip, lz4, zstd), the message is compressed
+  - checks the size of the message, if it's too large a _RecordTooLargeException_ is thrown
+  - checks whether the size of buffered messages doesn't reach _buffer.memory_ bytes otherwise it starts to wait
+  - adds the record to a batch of records that will be sent to the same partition
   - uses a separate thread to send batches to the right broker
-  - returns a `Future` object if it's performed before _max.block.ms_ otherwise a timeout exception is thrown
+  - returns a `Future` object if it's performed before _max.block.ms_ otherwise a _TimeoutException_ is thrown
 
 The `acks` parameter specified by producers, controls how many partition replicas must receive the record and answer to the producer to consider the write successful.
 This parameter influences the _producer latency_, not the _end-to-end latency_.
@@ -34,15 +37,33 @@ This parameter influences the _producer latency_, not the _end-to-end latency_.
 
 ### Sending
 
-TODO
-
 Once the `Future`is returned to the caller. There are 3 ways of interacting with it:
   - _Fire-and-forget send_: we don't care if the message arrived successfully, we don't on anything with this `Future`.
   - _Synchronous send_: we invoke `Future#get()` that will wait until we know if the message arrived or not.
   - _Asynchronous send_: we provide a callback function (reactive way) to the `Future`.
 
+The batch is sent: 
+- if the amount of memory in bytes of messages in the current batch is >= _batch.size_ or,
+- if the waited time >= _linger.ms_.
 
 
+https://medium.com/lydtech-consulting/kafka-producer-message-batching-2f6f0b75a19c
+
+Delivery timeout:
+- This is the maximum time spent from the point a record is ready for sending (placed in a batch, i.e., _send()_ returned). 
+- Definition: _delivery.timeout.ms_ >= _linger.ms_ + _retry.backoff.ms_ + _request.timeout.ms_. 
+- If the timeout is reached, the original exception (in case of a retry), otherwise the timeout exception is provided in the callback. 
+- Take into account the time needed for a leader election.
+- _request.timeout.ms_:
+  - the timeout for a broker answer when sending data (doesn't include retries)
+  - if the timeout is reached, it will either retry or complete with a timeout exception
+- _retries_ and _retry.backoff.ms:
+  - _retries_ indicates how many times the producer will retry sending (O means "no retry")
+  - _retry.backoff.ms_ specifies the time between retries
+  - not all errors are re-triable, some are not transient (like "message too large")
+- _linger.ms_: 
+  - the amount of time to wait for additional messages before sending the current batch (default is 0)
+  - this increases (a little) a single message latency, but increases throughput
 
 
 
@@ -54,6 +75,9 @@ TODO
 
 
 
+## Consumers
+
+TODO 
 
 Kafka will not allow consumers to read records until they are written to all in sync replicas.
 
