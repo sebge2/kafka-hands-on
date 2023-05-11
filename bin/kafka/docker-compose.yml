@@ -33,6 +33,18 @@ services:
       - ./volume/zookeeper/zookeeper-2/data:/var/lib/zookeeper/data
       - ./volume/zookeeper/zookeeper-2/log:/var/lib/zookeeper/log
 
+  zookeeper-ui:
+    image: elkozmon/zoonavigator:1.1.2
+    hostname: zookeeper-ui
+    container_name: zookeeper-ui
+    environment:
+      CONNECTION_LOCALZK_CONN: zookeeper-1:2181
+      HTTP_PORT: 8083
+    ports:
+      - 8083:8083
+    networks:
+      - hands-on-network
+
   kafka-broker-1:
     image: confluentinc/cp-kafka:6.1.9
     hostname: kafka-broker-1
