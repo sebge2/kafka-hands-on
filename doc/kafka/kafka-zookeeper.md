@@ -1,5 +1,14 @@
 # Kafka - Zookeeper
 
+Zookeeper has two important functions, it's used to:
+- **elect a controller**
+- **store the cluster metadata**:
+  - registered brokers
+  - configuration
+  - topics
+  - partitions
+  - replicas.
+
 ## Cluster Membership
 
 Every broker has a unique identifier (set in the configuration file or automatically generated). Every time a broker starts,
