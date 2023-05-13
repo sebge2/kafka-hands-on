@@ -1,0 +1,93 @@
+version: '3.9'
+
+services:
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka-broker-1
+    container_name: kafka-broker-1
+    ports:
+      - 19092:19092
+    networks:
+      - hands-on-network
+    volumes:
+      - ./volume/broker:/my-data
+      - ./volume/broker/broker-1/logs:/kafka/kafka-logs
+    environment:
+      KAFKA_ENABLE_KRAFT: yes
+      KAFKA_BROKER_ID: 1
+      KAFKA_BROKER_RACK: "r1"
+      KAFKA_NODE_ID: 1
+      CLUSTER_ID: p8fFEbKGQ22B6M_Da_vCBw
+      KAFKA_LISTENERS: BROKER://kafka-broker-1:19092,EXTERNAL://kafka-broker-1:19094,CONTROLLER://kafka-broker-1:19093
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-1:19092,EXTERNAL://kafka-broker-1:19094
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,BROKER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      #KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_PROCESS_ROLES: 'controller,broker'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:19093,2@kafka-broker-2:29093'
+      #KAFKA_METADATA_LOG_SEGMENT_MS: 15000
+      #KAFKA_METADATA_MAX_RETENTION_MS: 1200000
+      #KAFKA_METADATA_LOG_MAX_RECORD_BYTES_BETWEEN_SNAPSHOTS: 2800
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
+
+  kafka-broker-2:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka-broker-2
+    container_name: kafka-broker-2
+    ports:
+      - 29092:29092
+    networks:
+      - hands-on-network
+    volumes:
+      - ./volume/broker:/my-data
+      - ./volume/broker/broker-2/logs:/kafka/kafka-logs
+    environment:
+      KAFKA_ENABLE_KRAFT: yes
+      KAFKA_BROKER_ID: 2
+      KAFKA_BROKER_RACK: "r1"
+      KAFKA_NODE_ID: 2
+      CLUSTER_ID: p8fFEbKGQ22B6M_Da_vCBw
+      KAFKA_LISTENERS: BROKER://kafka-broker-2:29092,EXTERNAL://kafka-broker-2:29094,CONTROLLER://kafka-broker-2:29093
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-2:29092,EXTERNAL://kafka-broker-2:29094
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,BROKER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      #KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_PROCESS_ROLES: 'controller,broker'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:19093,2@kafka-broker-2:29093'
+      #KAFKA_METADATA_LOG_SEGMENT_MS: 15000
+      #KAFKA_METADATA_MAX_RETENTION_MS: 1200000
+      #KAFKA_METADATA_LOG_MAX_RECORD_BYTES_BETWEEN_SNAPSHOTS: 2800
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
+
+
+  kafka-schema-registry:
+    image: confluentinc/cp-schema-registry:7.4.0
+    hostname: schema-registry
+    container_name: schema-registry
+    networks:
+      - hands-on-network
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+    ports:
+      - '8081:8081'
+    volumes:
+      - ./volume/schema:/my-schema
+    environment:
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+
+networks:
+  hands-on-network:
+    name: kafka_handson_network
