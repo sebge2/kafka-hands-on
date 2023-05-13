@@ -1,3 +1,9 @@
 #!/bin/sh
 
-docker-compose up -d --remove-orphans
+FILE="docker-compose-zookeeper.yml"
+
+if [ $1 = "kraft" ]; then
+  FILE="docker-compose-kraft.yml"
+fi
+
+docker-compose -f $FILE up -d --remove-orphans
