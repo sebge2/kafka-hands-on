@@ -24,6 +24,7 @@
         <module name="kafka-handson-favorite-color-stream" />
         <module name="kafka-hadson-consumer-2-group-1" />
         <module name="kafka-hadson-avro-schema" />
+        <module name="kafka-hadson-admin-api" />
         <module name="kafka-hadson-producer-avro" />
         <module name="kafka-handson-bank-balance-stream" />
       </profile>
@@ -35,6 +36,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kafka-hadson-admin-api" options="-parameters" />
       <module name="kafka-hadson-avro-schema" options="-parameters" />
       <module name="kafka-hadson-consumer-1-group-1" options="-parameters" />
       <module name="kafka-hadson-consumer-1-group-2" options="-parameters" />

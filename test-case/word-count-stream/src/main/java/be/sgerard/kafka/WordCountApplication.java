@@ -45,7 +45,6 @@ public class WordCountApplication {
                 break;
             }
         }
-
     }
 
     private static Topology createTopology(){

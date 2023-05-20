@@ -25,5 +25,6 @@
 		<module>producer-without-key</module>
 		<module>producer-avro</module>
 		<module>stream</module>
+		<module>admin-api</module>
 	</modules>
 </project>
