@@ -19,6 +19,7 @@
         <module name="kafka-hadson-cooperative-receiver-1" />
         <module name="kafka-handson-wikimedia-producer" />
         <module name="kafka-handson-wikimedia-consumer" />
+        <module name="kafka-hadson-transaction" />
         <module name="kafka-hadson-producer-with-key" />
         <module name="kafka-hadson-consumer-1-group-2" />
         <module name="kafka-handson-favorite-color-stream" />
@@ -50,6 +51,7 @@
       <module name="kafka-hadson-producer-without-key" options="-parameters" />
       <module name="kafka-hadson-stream" options="-parameters" />
       <module name="kafka-hadson-taxi-time-function" options="-parameters" />
+      <module name="kafka-hadson-transaction" options="-parameters" />
       <module name="kafka-hands-on" options="" />
       <module name="kafka-handson-bank-balance-stream" options="-parameters" />
       <module name="kafka-handson-favorite-color-stream" options="-parameters" />

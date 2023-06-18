@@ -26,5 +26,6 @@
 		<module>producer-avro</module>
 		<module>stream</module>
 		<module>admin-api</module>
+		<module>transaction</module>
 	</modules>
 </project>
