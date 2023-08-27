@@ -1,11 +1,6 @@
 # Commands for Topics
 
 
-
-
-
-
-
 ## Kafka Console Producer
 
 ````
@@ -23,13 +18,4 @@ kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --fr
 kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --from-beginning --property schema.registry.url=http://localhost:8081
 kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --from-beginning --formatter kafka.tools.DefaultMessageFormatter --property print.timestamp=true --property print.key=true --property print.value=true
 kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --group group1
-````
-
-
-## Topic Configuration
-
-````
-kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type topics --entity-name my-topic  --describe
-kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type topics --entity-name my-topic  --alter --add-config min.insync.replicas=2
-kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type topics --entity-name my-topic  --alter --delete-config min.insync.replicas
 ````

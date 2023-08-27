@@ -142,6 +142,46 @@ kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test
 ````
 
 
+## Dynamic Configuration
+
+General pattern for adding a configuration:
+``````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --alter --entity-type [TYPE] --entity-name [NAME] --add-config [KEY]=[VALUE]
+``````
+
+General pattern for deleting a configuration:
+``````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --alter --entity-type [TYPE] --entity-name [NAME] --delete-config [KEY]
+``````
+
+General pattern for checking a configuration:
+``````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --alter --entity-type [TYPE] --entity-name [NAME] --describe
+``````
+
+
+### Topic Dynamic Configuration
+
+Example:
+``````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type topics --entity-name test --alter --add-config min.insync.replicas=2
+``````
+
+You can check with:
+````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type topics --entity-name test --describe
+````
+
+or:
+````
+kafka-topics --bootstrap-server kafka-broker-1:19092 --describe --topics-with-overrides
+````
+
+You can delete a specific configuration:
+````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type topics --entity-name test --alter --delete-config min.insync.replicas
+````
+
 
 ## Dump Log Segment
 
