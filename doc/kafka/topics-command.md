@@ -1,15 +1,6 @@
 # Commands for Topics
 
 
-## Kafka Console Producer
-
-````
-kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test
-kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test --property schema.registry.url=http://localhost:8081 --property value.schema='{"type": "record", "name": "myRecord", "fields": [ {"name": "f1", "type": "string" ]]}'
-kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test --property parse.key=true --property key.separator=:
-````
-
-
 ## Kafka Console Consumer
 
 ````

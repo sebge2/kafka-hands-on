@@ -183,6 +183,57 @@ kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type topics --ent
 ````
 
 
+### Users and Clients Dynamic Configuration
+
+Example:
+``````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --alter --add-config "controller_mutation_rate=10" --entity-type clients --entity-name my-client --entity-type users --entity-name my-user
+``````
+
+
+## Broker Dynamic Configuration
+
+Example:
+``````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type brokers --entity-name 1 --alter --add-config unclean.leader.election.enable=true
+``````
+
+You can check with:
+``````
+kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type brokers --entity-name 1 --describe
+``````
+
+
+## Console Producer
+
+By default messages are read one per line, with a tab character separating the key and value. The default encoder is used (raw bytes).
+
+````
+kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test
+````
+
+It can be customized either by: `--producer.config=[FILE]` or `--producer-property [KEY]=[VALUE]`.
+
+Useful options:
+* `batch-size=[SIZE]`
+* `timeout=[TIMEOUT]`
+* `compression-codec=[CODEC]`
+* `sync`
+* `ignore.error=[BOOLEAN]`
+* `parse-key=[BOOLEAN]`
+* `key-separator=[SEPARATOR]`
+
+Example:
+``````
+kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test --property parse.key=true --property key.separator=:
+``````
+
+With a AVRO schema:
+``````
+kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test --property schema.registry.url=http://localhost:8081 --property value.schema='{"type": "record", "name": "myRecord", "fields": [ {"name": "f1", "type": "string" ]]}'
+``````
+
+
 ## Dump Log Segment
 
 Allows you to look at a partition segment in the filesystem and examine its content:
