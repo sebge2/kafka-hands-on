@@ -1,22 +1,9 @@
 # Commands for Topics
 
-The following commands can be executed on the first broker:
-
-````
-cd bin/kafka
-./start.sh
-./execute_on_first_broker.sh
-````
 
 
-## Topic Management
 
-````
-kafka-topics --bootstrap-server kafka-broker-1:19092 --list
-kafka-topics --bootstrap-server kafka-broker-1:19092 --create --topic test --partitions 3 --replication-factor 1
-kafka-topics --bootstrap-server kafka-broker-1:19092 --create --topic --describe test
-kafka-topics --bootstrap-server kafka-broker-1:19092 --delete --topic test
-````
+
 
 
 ## Kafka Console Producer
