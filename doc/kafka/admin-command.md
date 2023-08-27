@@ -79,6 +79,70 @@ Be careful, the option `delete.topic.enable` must be `true`.
 ````
 
 
+## Consumer Groups
+
+
+### List Groups
+
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --list
+````
+
+
+### Describe a Group
+
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --describe --group connect-postgresql-stream-demo-distributed
+````
+
+
+### Delete a Group
+
+Be careful, the group must be empty (no active members).
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --delete --group kafka-hands-on-range-assignor-group-2
+````
+
+
+### Export Offsets
+
+Offsets will be exported to a CSV file:
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --export --group my-group  --topic test --reset-offsets --to-current --dry-run > offsets.csv
+````
+
+
+### Reset Offsets
+
+Based on a CSV file (see how to export offsets):
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --reset-offsets --group my-group --from-file offsets.csv --execute
+````
+
+Reset to the earliest offset for partition 0:
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --group  group1 --reset-offsets --to-earliest --execute --topic test:0
+````
+
+Reset to the latest offset for partition 0:
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --group  group1 --reset-offsets --to-latest --execute --topic test:0
+````
+
+Reset relative to the current offset (the shift can be a positive or negative number) for partition 0:
+````
+kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --group  group1 --reset-offsets --shift-by -2 --execute --topic test:0
+````
+
+It can be tested with:
+
+````
+kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --group my-group
+kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test
+````
+
+
+
 ## Dump Log Segment
 
 Allows you to look at a partition segment in the filesystem and examine its content:

@@ -26,17 +26,6 @@ kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --gr
 ````
 
 
-## Kafka Console Consumer Group
-
-````
-kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --list
-kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --describe --group group1
-kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --group  group1 --reset-offsets --to-earliest --execute --topic test
-kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --group  group1 --reset-offsets --shift-by 2 --execute --topic test
-kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --group  group1 --reset-offsets --shift-by -2 --execute --topic test
-kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --group  group1 --reset-offsets --shift-by -2 --execute --all-topics
-````
-
 ## Topic Configuration
 
 ````
