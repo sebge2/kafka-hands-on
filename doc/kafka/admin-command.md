@@ -206,19 +206,23 @@ kafka-configs --bootstrap-server kafka-broker-1:19092 --entity-type brokers --en
 
 ## Console Producer
 
-By default messages are read one per line, with a tab character separating the key and value. The default encoder is used (raw bytes).
-
 ````
 kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test
 ````
 
-It can be customized either by: `--producer.config=[FILE]` or `--producer-property [KEY]=[VALUE]`.
+It can be customized either by: `--producer.config=[FILE]`, or by `--producer-property [KEY]=[VALUE]`.
+
+Example of producer properties:
+* `acks=[all, -1, 0, 1]`
 
 Useful options:
 * `batch-size=[SIZE]`
 * `timeout=[TIMEOUT]`
 * `compression-codec=[CODEC]`
 * `sync`
+* ...
+
+Line reader properties can be customized by `--property`:
 * `ignore.error=[BOOLEAN]`
 * `parse-key=[BOOLEAN]`
 * `key-separator=[SEPARATOR]`
@@ -232,6 +236,52 @@ With a AVRO schema:
 ``````
 kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test --property schema.registry.url=http://localhost:8081 --property value.schema='{"type": "record", "name": "myRecord", "fields": [ {"name": "f1", "type": "string" ]]}'
 ``````
+
+
+## Console Consumer
+
+By default, the consumer group has the syntax: `console-consumer-[ID]`. It can be customized with the option `--group`.
+
+Single topic to listen to with `--topic`:
+````
+kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test
+````
+
+Multiple topics to listen to with `--whitelist`:
+````
+kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --whitelist '.*'
+````
+
+It can be customized either by: `--consumer.config=[FILE]` or by `--consumer-property [KEY]=[VALUE]`.
+
+Example of consumer properties:
+* `exclude.internal.topics`
+
+Useful options:
+* `--formatter=[CLASS NAME]`
+* `--from-beginning`
+* `--max-messages [NUMBER]`
+* `--partition [NUMBER]`
+* `--offset [earliest|latest|NUMBER]`
+* `--skip-message-on-error`
+* `--group [GROUP ID]`
+
+The default formatter can be customized by `--property`:
+* `print.timestamp=[BOOLEAN]`
+* `print.key=[BOOLEAN]`
+* `print.offset=[BOOLEAN]`
+* `print.partition=[BOOLEAN]`
+
+* `key.separator=[SEPARATOR]`
+* `line.separator=[SEPARATOR]`
+
+* `key.deserializer=[CLASS NAME]`
+* `value.deserializer=[CLASS NAME]`
+
+Example to get committed offsets:
+`````
+kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic __consumer_offsets --from-beginning --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" --consumer-property exclude.internal.topics=false
+`````
 
 
 ## Dump Log Segment

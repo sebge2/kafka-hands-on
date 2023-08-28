@@ -42,7 +42,7 @@ cd bin/postgresql
 You can find documentation in the following sections.
 
 - [Kafka API](doc/kafka/kafka.md)
-- [Commands Managing Topics](doc/kafka/topics-command.md)
+- [Administration Commands](doc/kafka/admin-command.md)
 - [Avro](doc/avro/readme.md)
 - [REST Proxy](doc/rest-proxy/readme.md)
 - [Stream](doc/stream/readme.md)
