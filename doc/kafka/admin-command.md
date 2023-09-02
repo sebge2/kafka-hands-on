@@ -346,5 +346,34 @@ kafka-reassign-partitions --bootstrap-server kafka-broker-1:19092 --reassignment
 
 Allows you to look at a partition segment in the filesystem and examine its content:
 ````
-kafka-run-class kafka.tools.DumpLogSegments --deep-iteration --files /kafka/kafka-logs/kafka-hands-on-range-assignor-0/00000000000000002762.log
+kafka-dump-log --files /kafka/kafka-logs/test-0/00000000000000000000.log 
+````
+
+* Information about the payload: `--print-data-log`
+* Check that the index is in a usable state: `--index-sanity-check` 
+* Only check indexes without printing out all the indexes: `--verify-index-only`
+
+
+
+## Replication Verification
+
+In order to check that every message is properly replicated on all the replicas of the specified topics:
+````
+kafka-replica-verification --broker-list kafka-broker-1:19092,kafka-broker-2:29092 --topic-white-list '.*' 
+````
+
+
+## Check API versions
+
+The following tool helps you to perform upgrades of features:
+````
+kafka-broker-api-versions --bootstrap-server kafka-broker-1:19092
+````
+
+
+## Client ACLs:
+
+Management of client Access Control Lists:
+````
+kafka-acls --bootstrap-server kafka-broker-1:19092
 ````
