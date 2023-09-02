@@ -66,7 +66,7 @@ Useful arguments:
 ### Adding Partitions
 
 ````
- kafka-topics --bootstrap-server kafka-broker-1:19092 --alter --topic test --partitions 5
+kafka-topics --bootstrap-server kafka-broker-1:19092 --alter --topic test --partitions 5
 ````
 
 
@@ -282,6 +282,64 @@ Example to get committed offsets:
 `````
 kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic __consumer_offsets --from-beginning --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" --consumer-property exclude.internal.topics=false
 `````
+
+
+## Partition Management
+
+### Start Automatic Replica Election
+
+If you want to start manually an election on all the topics where the election type is `PREFERRED`, or `UNCLEAN`:
+````
+kafka-leader-election --bootstrap-server kafka-broker-1:19092 --election-type PREFERRED --all-topic-partitions
+````
+
+With a specific partition and topic:
+````
+kafka-leader-election --bootstrap-server kafka-broker-1:19092 --election-type PREFERRED --topic test --partition 0 
+````
+
+You can also pass a list of several partitions:
+````
+kafka-leader-election --bootstrap-server kafka-broker-1:19092 --election-type PREFERRED --path-to-json-file partitions.json
+````
+
+with body:
+````
+{ "partitions":
+[
+  { "topic": "test", "partition": 0 }
+]
+}
+````
+
+
+### Start Manual Replica Assignment
+
+First of all, generate 2 files containing the current partitions assignment (ex: `current_assignment.json`) for the specified broker and the proposed assignment (ex: `new_assignment.json`):
+````
+kafka-reassign-partitions --bootstrap-server kafka-broker-1:19092 --topics-to-move-json-file ./topics.json --broker-list 1,2 --generate
+````
+
+With `topics.json` file:
+````
+{
+    "topics": [
+        {
+            "topic": "test"
+        }
+    ]
+}
+````
+
+To execute the new assignment:
+````
+kafka-reassign-partitions --bootstrap-server kafka-broker-1:19092 --reassignment-json-file ./new_assignment.json --execute
+````
+
+To verify the status of the reassignment:
+````
+kafka-reassign-partitions --bootstrap-server kafka-broker-1:19092 --reassignment-json-file ./new_assignment.json --verify
+````
 
 
 ## Dump Log Segment
