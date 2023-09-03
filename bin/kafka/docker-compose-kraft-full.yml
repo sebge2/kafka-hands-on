@@ -1,0 +1,235 @@
+version: '3.9'
+
+services:
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka-broker-1
+    container_name: kafka-broker-1
+    ports:
+      - 19092:19092
+    networks:
+      - hands-on-network
+    volumes:
+      - ./volume/broker:/my-data
+      - ./volume/broker/broker-1/logs:/kafka/kafka-logs
+      - ./volume/broker/broker-1/ssl:/kafka/kafka-ssl
+    environment:
+      KAFKA_BROKER_RACK: "r1"
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      # Listeners
+      KAFKA_LISTENERS: BROKER://kafka-broker-1:19092,EXTERNAL://kafka-broker-1:19094,CONTROLLER://kafka-broker-1:19093
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-1:19092,EXTERNAL://kafka-broker-1:19094
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:SSL,BROKER:SSL,EXTERNAL:SSL
+      # Kraft
+      KAFKA_ENABLE_KRAFT: yes
+      KAFKA_BROKER_ID: 1
+      KAFKA_NODE_ID: 1
+      CLUSTER_ID: p8fFEbKGQ22B6M_Da_vCBw
+      KAFKA_PROCESS_ROLES: 'controller,broker'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:19093,2@kafka-broker-2:29093'
+      # General
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
+      # Security
+      KAFKA_SSL_KEYSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-1.ks.p12"
+      KAFKA_SSL_KEYSTORE_TYPE: "PKCS12"
+      KAFKA_SSL_KEYSTORE_PASSWORD: "server-broker-1-ks-password"
+      KAFKA_SSL_KEY_PASSWORD: "server-broker-1-ks-password"
+      KAFKA_SSL_TRUSTSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-1.ts.p12"
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: "server-broker-1-ts-password"
+      KAFKA_SSL_TRUSTSTORE_TYPE: "PKCS12"
+      KAFKA_SSL_CLIENT_AUTH: "none"
+      KAFKA_SECURITY_PROTOCOL: SSL
+      #KAFKA_JMX_OPTS: "-Djavax.net.debug=all"
+
+
+  kafka-broker-2:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka-broker-2
+    container_name: kafka-broker-2
+    ports:
+      - 29092:29092
+    networks:
+      - hands-on-network
+    volumes:
+      - ./volume/broker:/my-data
+      - ./volume/broker/broker-2/logs:/kafka/kafka-logs
+      - ./volume/broker/broker-2/ssl:/kafka/kafka-ssl
+    environment:
+      KAFKA_BROKER_RACK: "r1"
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      # Listeners
+      KAFKA_LISTENERS: BROKER://kafka-broker-2:29092,EXTERNAL://kafka-broker-2:29094,CONTROLLER://kafka-broker-2:29093
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-2:29092,EXTERNAL://kafka-broker-2:29094
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:SSL,BROKER:SSL,EXTERNAL:SSL
+      # Kraft
+      KAFKA_ENABLE_KRAFT: yes
+      KAFKA_BROKER_ID: 2
+      KAFKA_NODE_ID: 2
+      CLUSTER_ID: p8fFEbKGQ22B6M_Da_vCBw
+      KAFKA_PROCESS_ROLES: 'controller,broker'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:19093,2@kafka-broker-2:29093'
+      # General
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
+      # Security
+      KAFKA_SSL_KEYSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-2.ks.p12"
+      KAFKA_SSL_KEYSTORE_TYPE: "PKCS12"
+      KAFKA_SSL_KEYSTORE_PASSWORD: "server-broker-2-ks-password"
+      KAFKA_SSL_KEY_PASSWORD: "server-broker-2-ks-password"
+      KAFKA_SSL_TRUSTSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-2.ts.p12"
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: "server-broker-2-ts-password"
+      KAFKA_SSL_TRUSTSTORE_TYPE: "PKCS12"
+      KAFKA_SSL_CLIENT_AUTH: "none"
+      KAFKA_SECURITY_PROTOCOL: SSL
+      #KAFKA_JMX_OPTS: "-Djavax.net.debug=all"
+
+  kafka-schema-registry:
+    image: confluentinc/cp-schema-registry:7.4.0
+    hostname: schema-registry
+    container_name: schema-registry
+    networks:
+      - hands-on-network
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+    ports:
+      - '8081:8081'
+    volumes:
+      - ./volume/schema:/my-schema
+    environment:
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+
+  ksql-server:
+    image: confluentinc/cp-ksql-server:5.4.10
+    hostname: ksql-server
+    container_name: ksql-server
+    ports:
+      - 8088:8088
+    volumes:
+      - ./volume/ksql:/demo
+      - ./volume/ksql-extensions:/etc/ksql-server/ext
+    networks:
+      - hands-on-network
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-schema-registry
+      - kafka-connect-1
+      - kafka-connect-2
+    environment:
+      KSQL_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_KSQL_SERVICE_ID: kafka_workshop
+      KSQL_CUB_KAFKA_TIMEOUT: 300
+      KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KSQL_OPTS: "-Dksql.connect.url=http://kafka-connect-1:8083 -Dksql.extension.dir=/etc/ksql-server/ext"
+      KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
+      KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
+      KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
+
+  kafka-connect-1:
+    image: sebge2/kafka-connect:1.1.0
+    hostname: kafka-connect-1
+    container_name: kafka-connect-1
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-schema-registry
+    ports:
+      - '18083:8083'
+    volumes:
+      - ./volume/connectors-config:/demo
+      - ./volume/connectors:/usr/share/my-connectors
+    networks:
+      - hands-on-network
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: kafka-connect
+      CONNECT_CONFIG_STORAGE_TOPIC: kafka-connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: kafka-connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: kafka-connect-status
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "true"
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect-1"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
+      KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
+
+  kafka-connect-2:
+    image: sebge2/kafka-connect:1.1.0
+    hostname: kafka-connect-2
+    container_name: kafka-connect-2
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-schema-registry
+    ports:
+      - '28083:8083'
+    volumes:
+      - ./volume/connectors-config:/demo
+      - ./volume/connectors:/usr/share/my-connectors
+    networks:
+      - hands-on-network
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: kafka-connect
+      CONNECT_CONFIG_STORAGE_TOPIC: kafka-connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: kafka-connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: kafka-connect-status
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "true"
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect-2"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
+      KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:902f11a1d95ed5211519d10b9757124678ecd479
+    container_name: kafka-ui
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-schema-registry
+      - ksql-server
+    ports:
+      - "8080:8080"
+    networks:
+      - hands-on-network
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
+      - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=http://schema-registry:8081
+      - KAFKA_CLUSTERS_0_KSQLDBSERVER=ksql-server:8088
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=kafka-connect-1
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS=http://kafka-connect-1:8083
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_1_NAME=kafka-connect-2
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_1_ADDRESS=http://kafka-connect-2:8083
+
+networks:
+  hands-on-network:
+    name: kafka_handson_network
