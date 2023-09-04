@@ -1,19 +1,88 @@
 #!/bin/sh
 
+# https://docs.cloudera.com/runtime/7.2.0/kafka-securing/topics/kafka-secure-sign-cert.html
+# https://help.hcltechsw.com/unica/Journey/en/12.1.1/Journey/AdminGuide/Configuration_of_kafka_on_SSL.html
+# https://www.baeldung.com/spring-boot-kafka-ssl
+# https://dalelane.co.uk/blog/?p=4399
+
 remove_ca_certificate() {
-  rm -f "./server.cert"
-  rm -f "./server.csr"
-  rm -f "./server.key"
+  rm -f "./broker-ca.cert"
+  rm -f "./broker-ca.csr"
+  rm -f "./broker-ca.key"
+  rm -f "./client-ca.cert"
+  rm -f "./client-ca.csr"
+  rm -f "./client-ca.key"
   rm -f "./.srl"
 }
 
-generate_ca_certificates() {
-  echo "Generate CA certificate"
-  openssl req -new -newkey rsa:2048 -nodes -keyout ./server.key -out ./server.csr -subj "/C=BE/CN=Broker CA"
-  openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -subj "/C=BE/CN=Broker CA" -keyout ./server.key  -out ./server.cert
+generate_broker_ca_certificates() {
+  echo "Generate Broker CA certificate"
+  openssl req -new -newkey rsa:2048 -nodes -keyout ./broker-ca.key -out ./broker-ca.csr -subj "/C=BE/CN=Broker CA"
+  openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -subj "/C=BE/CN=Broker CA" -keyout ./broker-ca.key  -out ./broker-ca.cert
   echo ""
 }
 
+generate_client_ca_certificates() {
+  echo "Generate Client CA certificate"
+  openssl req -new -newkey rsa:2048 -nodes -keyout ./client-ca.key -out ./client-ca.csr -subj "/C=BE/CN=Client CA"
+  openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -subj "/C=BE/CN=Client CA" -keyout ./client-ca.key  -out ./client-ca.cert
+  echo ""
+}
+
+generate_client_certificate() {
+  CLIENT_NAME=$1
+  CLIENT_SSL_CONFIG_DIR=$2
+
+  CLIENT_TRUSTSTORE_LOCATION="$CLIENT_SSL_CONFIG_DIR/client-$CLIENT_NAME.ts.p12"
+  CLIENT_TRUSTSTORE_PASSWORD="client-$CLIENT_NAME-ts-password"
+
+  CLIENT_KEYSTORE_LOCATION="$CLIENT_SSL_CONFIG_DIR/client-$CLIENT_NAME.ks.p12"
+  CLIENT_KEYSTORE_PASSWORD="client-$CLIENT_NAME-ks-password"
+
+  CLIENT_CERTIFICATE_UNSIGNED="$CLIENT_SSL_CONFIG_DIR/client-$CLIENT_NAME.cert"
+  CLIENT_CERTIFICATE_SIGNED="$CLIENT_SSL_CONFIG_DIR/client-$CLIENT_NAME.signed.cert"
+
+  rm -rf "$CLIENT_SSL_CONFIG_DIR"
+  mkdir -p "$CLIENT_SSL_CONFIG_DIR"
+
+  echo "Generate a truststore for client containing the client CA certificate"
+  keytool -keystore "$CLIENT_TRUSTSTORE_LOCATION" -storepass "$CLIENT_TRUSTSTORE_PASSWORD" -alias "ClientCARoot" -import -file "./client-ca.cert" -noprompt -storetype PKCS12
+  echo ""
+
+  echo "Import broker CA certificate into client's truststore"
+  keytool -keystore "$CLIENT_TRUSTSTORE_LOCATION" -storepass "$CLIENT_TRUSTSTORE_PASSWORD" -alias "BrokerCARoot" -import -file "./broker-ca.cert" -noprompt
+
+  echo "Generate a private key for client"
+  keytool -keystore "$CLIENT_KEYSTORE_LOCATION" -storepass "$CLIENT_KEYSTORE_PASSWORD" -keypass "$CLIENT_KEYSTORE_PASSWORD" -alias "$CLIENT_NAME" -genkey -keyalg RSA -keysize 2048 -storetype PKCS12 -dname "CN=$CLIENT_NAME,O=SGerard,C=BE" -validity 365
+  echo ""
+
+  echo "Export client certificate into a CERT file"
+  keytool -keystore "$CLIENT_KEYSTORE_LOCATION" -storepass "$CLIENT_KEYSTORE_PASSWORD" -keypass "$CLIENT_KEYSTORE_PASSWORD" -alias "$CLIENT_NAME" -certreq -file "$CLIENT_CERTIFICATE_UNSIGNED"
+  echo ""
+
+  echo "Sign client certificate with CA"
+  openssl x509 -req -CA "./client-ca.cert" -CAkey "./client-ca.key" -in "$CLIENT_CERTIFICATE_UNSIGNED" -out "$CLIENT_CERTIFICATE_SIGNED" -days 365 -CAcreateserial
+  echo ""
+
+  echo "Import Broker CA certificate into client's keystore"
+  keytool -keystore "$CLIENT_KEYSTORE_LOCATION" -storepass "$CLIENT_KEYSTORE_PASSWORD" -keypass "$CLIENT_KEYSTORE_PASSWORD" -alias "BrokerCARoot" -import -file "./broker-ca.cert" -noprompt
+  echo ""
+
+  echo "Import Client CA certificate into client's keystore"
+  keytool -keystore "$CLIENT_KEYSTORE_LOCATION" -storepass "$CLIENT_KEYSTORE_PASSWORD" -keypass "$CLIENT_KEYSTORE_PASSWORD" -alias "ClientCARoot" -import -file "./client-ca.cert" -noprompt
+  echo ""
+
+  echo "Import client certificate into client's keystore"
+  keytool -keystore "$CLIENT_KEYSTORE_LOCATION" -storepass "$CLIENT_KEYSTORE_PASSWORD" -keypass "$CLIENT_KEYSTORE_PASSWORD" -alias "$CLIENT_NAME" -import -file "$CLIENT_CERTIFICATE_SIGNED" -noprompt
+
+  echo "# kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --consumer.config ./ssl-debug.properties
+security.protocol = SSL
+ssl.truststore.location = /kafka/ssl/client-$CLIENT_NAME.ts.p12
+ssl.truststore.password = $CLIENT_TRUSTSTORE_PASSWORD
+ssl.keystore.location = /kafka/ssl/client-$CLIENT_NAME.ks.p12
+ssl.keystore.password = $CLIENT_KEYSTORE_PASSWORD
+ssl.key.password = $CLIENT_KEYSTORE_PASSWORD" > "$CLIENT_SSL_CONFIG_DIR/ssl-debug.properties"
+}
 
 generate_broker_certificates() {
   BROKER_NAME=$1
@@ -32,29 +101,41 @@ generate_broker_certificates() {
   rm -rf "$BROKER_SSL_CONFIG_DIR"
   mkdir -p "$BROKER_SSL_CONFIG_DIR"
 
-  echo "Generate a trust store for brokers containing the CA certificate (inter-broker authentication)"
-  keytool -import -file "./server.cert" -keystore "$BROKER_TRUSTSTORE_LOCATION" -storetype PKCS12 -storepass "$BROKER_TRUSTSTORE_PASSWORD" -alias "BrokerCARoot" -noprompt
+  echo "Generate a truststore for brokers containing the CA certificate (inter-broker authentication)"
+  keytool -keystore "$BROKER_TRUSTSTORE_LOCATION" -storepass "$BROKER_TRUSTSTORE_PASSWORD" -alias "BrokerCARoot" -import -file "./broker-ca.cert" -noprompt -storetype PKCS12
   echo ""
 
+  echo "Import Client CA certificate into broker's truststore"
+  keytool -keystore "$BROKER_TRUSTSTORE_LOCATION" -storepass "$BROKER_TRUSTSTORE_PASSWORD" -alias "ClientCARoot" -import -file "./client-ca.cert" -noprompt
+
   echo "Generate a private key for broker"
-  keytool -genkey -keyalg RSA -keysize 2048 -keystore "$BROKER_KEYSTORE_LOCATION" -storepass "$BROKER_KEYSTORE_PASSWORD" -keypass "$BROKER_KEYSTORE_PASSWORD" -alias "$BROKE_HOSTNAME" -storetype PKCS12 -dname "CN=$BROKE_HOSTNAME,O=SGerard,C=BE" -validity 365
+  keytool -keystore "$BROKER_KEYSTORE_LOCATION" -storepass "$BROKER_KEYSTORE_PASSWORD" -keypass "$BROKER_KEYSTORE_PASSWORD" -alias "$BROKE_HOSTNAME" -genkey -keyalg RSA -keysize 2048 -storetype PKCS12 -dname "CN=$BROKE_HOSTNAME,O=SGerard,C=BE" -validity 365
   echo ""
 
   echo "Export broker certificate into a CERT file"
   keytool -keystore "$BROKER_KEYSTORE_LOCATION" -storepass "$BROKER_KEYSTORE_PASSWORD" -keypass "$BROKER_KEYSTORE_PASSWORD" -alias "$BROKE_HOSTNAME" -certreq -file "$BROKER_CERTIFICATE_UNSIGNED"
   echo ""
 
-  openssl x509 -req -CA "./server.cert" -CAkey "./server.key" -in "$BROKER_CERTIFICATE_UNSIGNED" -out "$BROKER_CERTIFICATE_SIGNED" -days 365 -CAcreateserial
+  echo "Sign broker certificate with CA"
+  openssl x509 -req -CA "./broker-ca.cert" -CAkey "./broker-ca.key" -in "$BROKER_CERTIFICATE_UNSIGNED" -out "$BROKER_CERTIFICATE_SIGNED" -days 365 -CAcreateserial
+  echo ""
 
-  echo "Import CA certificate into broker's keystore"
-  keytool -keystore "$BROKER_KEYSTORE_LOCATION" -storepass "$BROKER_KEYSTORE_PASSWORD" -keypass "$BROKER_KEYSTORE_PASSWORD" -alias "BrokerCARoot" -import -file "./server.cert" -noprompt
+  echo "Import Broker CA certificate into broker's keystore"
+  keytool -keystore "$BROKER_KEYSTORE_LOCATION" -storepass "$BROKER_KEYSTORE_PASSWORD" -keypass "$BROKER_KEYSTORE_PASSWORD" -alias "BrokerCARoot" -import -file "./broker-ca.cert" -noprompt
+
+  echo "Import Client CA certificate into broker's keystore"
+  keytool -keystore "$BROKER_KEYSTORE_LOCATION" -storepass "$BROKER_KEYSTORE_PASSWORD" -keypass "$BROKER_KEYSTORE_PASSWORD" -alias "ClientCARoot" -import -file "./client-ca.cert" -noprompt
 
   echo "Import Broker certificate into broker's keystore"
   keytool -keystore "$BROKER_KEYSTORE_LOCATION" -storepass "$BROKER_KEYSTORE_PASSWORD" -keypass "$BROKER_KEYSTORE_PASSWORD" -alias "$BROKE_HOSTNAME" -import -file "$BROKER_CERTIFICATE_SIGNED" -noprompt
 }
 
 remove_ca_certificate
-generate_ca_certificates
+
+generate_broker_ca_certificates
+generate_client_ca_certificates
+
+generate_client_certificate "ui-manager" "./volume/ui-manager/ssl"
 
 generate_broker_certificates "broker-1"
 generate_broker_certificates "broker-2"

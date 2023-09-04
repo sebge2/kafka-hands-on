@@ -12,7 +12,7 @@ services:
     volumes:
       - ./volume/broker:/my-data
       - ./volume/broker/broker-1/logs:/kafka/kafka-logs
-      - ./volume/broker/broker-1/ssl:/kafka/kafka-ssl
+      - ./volume/broker/broker-1/ssl:/kafka/ssl
     environment:
       KAFKA_BROKER_RACK: "r1"
       KAFKA_LOG_DIRS: /kafka/kafka-logs
@@ -37,14 +37,14 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
       # Security
-      KAFKA_SSL_KEYSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-1.ks.p12"
+      KAFKA_SSL_KEYSTORE_LOCATION: "/kafka/ssl/server-broker-1.ks.p12"
       KAFKA_SSL_KEYSTORE_TYPE: "PKCS12"
       KAFKA_SSL_KEYSTORE_PASSWORD: "server-broker-1-ks-password"
       KAFKA_SSL_KEY_PASSWORD: "server-broker-1-ks-password"
-      KAFKA_SSL_TRUSTSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-1.ts.p12"
+      KAFKA_SSL_TRUSTSTORE_LOCATION: "/kafka/ssl/server-broker-1.ts.p12"
       KAFKA_SSL_TRUSTSTORE_PASSWORD: "server-broker-1-ts-password"
       KAFKA_SSL_TRUSTSTORE_TYPE: "PKCS12"
-      KAFKA_SSL_CLIENT_AUTH: "none"
+      KAFKA_SSL_CLIENT_AUTH: "required"
       KAFKA_SECURITY_PROTOCOL: SSL
       #KAFKA_JMX_OPTS: "-Djavax.net.debug=all"
 
@@ -60,7 +60,7 @@ services:
     volumes:
       - ./volume/broker:/my-data
       - ./volume/broker/broker-2/logs:/kafka/kafka-logs
-      - ./volume/broker/broker-2/ssl:/kafka/kafka-ssl
+      - ./volume/broker/broker-2/ssl:/kafka/ssl
     environment:
       KAFKA_BROKER_RACK: "r1"
       KAFKA_LOG_DIRS: /kafka/kafka-logs
@@ -85,14 +85,14 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_SCHEMA_REGISTRY_URL: "schema-registry:8081"
       # Security
-      KAFKA_SSL_KEYSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-2.ks.p12"
+      KAFKA_SSL_KEYSTORE_LOCATION: "/kafka/ssl/server-broker-2.ks.p12"
       KAFKA_SSL_KEYSTORE_TYPE: "PKCS12"
       KAFKA_SSL_KEYSTORE_PASSWORD: "server-broker-2-ks-password"
       KAFKA_SSL_KEY_PASSWORD: "server-broker-2-ks-password"
-      KAFKA_SSL_TRUSTSTORE_LOCATION: "/kafka/kafka-ssl/server-broker-2.ts.p12"
+      KAFKA_SSL_TRUSTSTORE_LOCATION: "/kafka/ssl/server-broker-2.ts.p12"
       KAFKA_SSL_TRUSTSTORE_PASSWORD: "server-broker-2-ts-password"
       KAFKA_SSL_TRUSTSTORE_TYPE: "PKCS12"
-      KAFKA_SSL_CLIENT_AUTH: "none"
+      KAFKA_SSL_CLIENT_AUTH: "required"
       KAFKA_SECURITY_PROTOCOL: SSL
       #KAFKA_JMX_OPTS: "-Djavax.net.debug=all"
 
@@ -218,17 +218,25 @@ services:
       - ksql-server
     ports:
       - "8080:8080"
+    volumes:
+      - ./volume/ui-manager/ssl:/kafka/ssl
     networks:
       - hands-on-network
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=SSL://kafka-broker-1:19092,SSL://kafka-broker-2:29092
       - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=http://schema-registry:8081
       - KAFKA_CLUSTERS_0_KSQLDBSERVER=ksql-server:8088
       - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=kafka-connect-1
       - KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS=http://kafka-connect-1:8083
       - KAFKA_CLUSTERS_0_KAFKACONNECT_1_NAME=kafka-connect-2
       - KAFKA_CLUSTERS_0_KAFKACONNECT_1_ADDRESS=http://kafka-connect-2:8083
+      - KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL=SSL
+      - KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION=/kafka/ssl/client-ui-manager.ks.p12
+      - KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_PASSWORD=client-ui-manager-ks-password
+      - KAFKA_CLUSTERS_0_SSL_TRUSTSTORELOCATION=/kafka/ssl/client-ui-manager.ts.p12
+      - KAFKA_CLUSTERS_0_SSL_TRUSTSTOREPASSWORD=client-ui-manager-ts-password
+      #- KAFKA_CLUSTERS_0_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM='' # DISABLE COMMON NAME VERIFICATION
 
 networks:
   hands-on-network:
