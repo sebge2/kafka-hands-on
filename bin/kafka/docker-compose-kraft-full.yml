@@ -10,9 +10,9 @@ services:
     networks:
       - hands-on-network
     volumes:
+      - ./volume/broker/broker-1/ssl:/kafka/ssl
       - ./volume/broker:/my-data
       - ./volume/broker/broker-1/logs:/kafka/kafka-logs
-      - ./volume/broker/broker-1/ssl:/kafka/ssl
     environment:
       KAFKA_BROKER_RACK: "r1"
       KAFKA_LOG_DIRS: /kafka/kafka-logs
@@ -48,7 +48,6 @@ services:
       KAFKA_SECURITY_PROTOCOL: SSL
       #KAFKA_JMX_OPTS: "-Djavax.net.debug=all"
 
-
   kafka-broker-2:
     image: confluentinc/cp-kafka:7.4.0
     hostname: kafka-broker-2
@@ -58,9 +57,9 @@ services:
     networks:
       - hands-on-network
     volumes:
+      - ./volume/broker/broker-2/ssl:/kafka/ssl
       - ./volume/broker:/my-data
       - ./volume/broker/broker-2/logs:/kafka/kafka-logs
-      - ./volume/broker/broker-2/ssl:/kafka/ssl
     environment:
       KAFKA_BROKER_RACK: "r1"
       KAFKA_LOG_DIRS: /kafka/kafka-logs
@@ -108,8 +107,8 @@ services:
     ports:
       - '8081:8081'
     volumes:
-      - ./volume/schema-registry/sample-schema:/schema-registry/sample-schema
       - ./volume/schema-registry/ssl:/schema-registry/ssl
+      - ./volume/schema-registry/sample-schema:/schema-registry/sample-schema
     environment:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: SSL://kafka-broker-1:19092,SSL://kafka-broker-2:29092
@@ -132,8 +131,8 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ./volume/ksql-server/sample-queries:/ksql/sample-queries
       - ./volume/ksql-server/ssl:/ksql/ssl
+      - ./volume/ksql-server/sample-queries:/ksql/sample-queries
       - ./volume/ksql-extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
@@ -174,6 +173,7 @@ services:
     ports:
       - '18083:8083'
     volumes:
+      - ./volume/connect/connect-1/ssl:/connect/ssl
       - ./volume/connectors-config:/demo
       - ./volume/connectors:/usr/share/my-connectors
     networks:
@@ -195,6 +195,15 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
       KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
+      # Security
+      CONNECT_SSL_KEYSTORE_LOCATION: "/connect/ssl/client-connect-1.ks.p12"
+      CONNECT_SSL_KEYSTORE_TYPE: "PKCS12"
+      CONNECT_SSL_KEYSTORE_PASSWORD: "client-connect-1-ks-password"
+      CONNECT_SSL_KEY_PASSWORD: "client-connect-1-ks-password"
+      CONNECT_SSL_TRUSTSTORE_LOCATION: "/connect/ssl/client-connect-1.ts.p12"
+      CONNECT_SSL_TRUSTSTORE_PASSWORD: "client-connect-1-ts-password"
+      CONNECT_SSL_TRUSTSTORE_TYPE: "PKCS12"
+      CONNECT_SECURITY_PROTOCOL: "SSL"
 
   kafka-connect-2:
     image: sebge2/kafka-connect:1.1.0
@@ -207,6 +216,7 @@ services:
     ports:
       - '28083:8083'
     volumes:
+      - ./volume/connect/connect-2/ssl:/connect/ssl
       - ./volume/connectors-config:/demo
       - ./volume/connectors:/usr/share/my-connectors
     networks:
@@ -228,10 +238,15 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
       KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
-
-#      CONNECT_SECURITY_PROTOCOL: SSL
-#      CONNECT_SSL_TRUSTSTORE_LOCATION: /run/secrets/kafka.truststore.jks
-#      CONNECT_SSL_TRUSTSTORE_PASSWORD:
+      # Security
+      CONNECT_SSL_KEYSTORE_LOCATION: "/connect/ssl/client-connect-2.ks.p12"
+      CONNECT_SSL_KEYSTORE_TYPE: "PKCS12"
+      CONNECT_SSL_KEYSTORE_PASSWORD: "client-connect-2-ks-password"
+      CONNECT_SSL_KEY_PASSWORD: "client-connect-2-ks-password"
+      CONNECT_SSL_TRUSTSTORE_LOCATION: "/connect/ssl/client-connect-2.ts.p12"
+      CONNECT_SSL_TRUSTSTORE_PASSWORD: "client-connect-2-ts-password"
+      CONNECT_SSL_TRUSTSTORE_TYPE: "PKCS12"
+      CONNECT_SECURITY_PROTOCOL: "SSL"
 
   kafka-ui:
     image: provectuslabs/kafka-ui:902f11a1d95ed5211519d10b9757124678ecd479
@@ -244,7 +259,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./volume/ui-manager/ssl:/kafka/ssl
+      - ./volume/ui-manager/ssl:/ui-manager/ssl
     networks:
       - hands-on-network
     environment:
@@ -257,9 +272,9 @@ services:
       - KAFKA_CLUSTERS_0_KAFKACONNECT_1_NAME=kafka-connect-2
       - KAFKA_CLUSTERS_0_KAFKACONNECT_1_ADDRESS=http://kafka-connect-2:8083
       - KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL=SSL
-      - KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION=/kafka/ssl/client-ui-manager.ks.p12
+      - KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION=/ui-manager/ssl/client-ui-manager.ks.p12
       - KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_PASSWORD=client-ui-manager-ks-password
-      - KAFKA_CLUSTERS_0_SSL_TRUSTSTORELOCATION=/kafka/ssl/client-ui-manager.ts.p12
+      - KAFKA_CLUSTERS_0_SSL_TRUSTSTORELOCATION=/ui-manager/ssl/client-ui-manager.ts.p12
       - KAFKA_CLUSTERS_0_SSL_TRUSTSTOREPASSWORD=client-ui-manager-ts-password
 
 networks:

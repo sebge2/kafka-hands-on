@@ -10,6 +10,8 @@ bin/kafka/volume/avro/*.avro
 bin/kafka/volume/ui-manager/*
 bin/kafka/volume/ksql-server/*
 bin/kafka/volume/schema-registry/*
+bin/kafka/volume/connect/connect-1/
+bin/kafka/volume/connect/connect-2/
 
 **/.terraform
 **/*.hcl
