@@ -137,6 +137,7 @@ generate_client_ca_certificates
 
 generate_client_certificate "ui-manager" "./volume/ui-manager/ssl"
 generate_client_certificate "ksql-server" "./volume/ksql-server/ssl"
+generate_client_certificate "schema-registry" "./volume/schema-registry/ssl"
 
 generate_broker_certificates "broker-1"
 generate_broker_certificates "broker-2"

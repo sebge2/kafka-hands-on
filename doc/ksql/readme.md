@@ -7,8 +7,8 @@ through the taxi application.
 ## Setup Avro Schemas
 
 Setup schemas that will be used by topics using Avro:
-- Create the user-complaint schema, go in this [readme](/bin/kafka/volume/schema/user-complaint/README.md).
-- Create the weather-row schema, go in this [readme](/bin/kafka/volume/schema/weather-row/README.md).
+- Create the user-complaint schema, go in this [readme](/bin/kafka/volume/schema-registry/sample-schema/user-complaint/README.md).
+- Create the weather-row schema, go in this [readme](/bin/kafka/volume/schema-registry/sample-schema/weather-row/README.md).
 
 
 ## Setup User Defined Functions
