@@ -115,13 +115,14 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
 
   ksql-server:
-    image: confluentinc/cp-ksql-server:5.4.10
+    image: confluentinc/cp-ksqldb-server:7.5.0
     hostname: ksql-server
     container_name: ksql-server
     ports:
       - 8088:8088
     volumes:
-      - ./volume/ksql/sample-queries:/ksql/sample-queries
+      - ./volume/ksql-server/sample-queries:/ksql/sample-queries
+      - ./volume/ksql-server/ssl:/ksql/ssl
       - ./volume/ksql-extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
@@ -141,6 +142,15 @@ services:
       KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
       KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
       KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
+      # Security
+      KSQL_SSL_KEYSTORE_LOCATION: "/ksql/ssl/client-ksql-server.ks.p12"
+      KSQL_SSL_KEYSTORE_TYPE: "PKCS12"
+      KSQL_SSL_KEYSTORE_PASSWORD: "client-ksql-server-ks-password"
+      KSQL_SSL_KEY_PASSWORD: "client-ksql-server-ks-password"
+      KSQL_SSL_TRUSTSTORE_LOCATION: "/ksql/ssl/client-ksql-server.ts.p12"
+      KSQL_SSL_TRUSTSTORE_PASSWORD: "client-ksql-server-ts-password"
+      KSQL_SSL_TRUSTSTORE_TYPE: "PKCS12"
+      KSQL_SECURITY_PROTOCOL: SSL
 
   kafka-connect-1:
     image: sebge2/kafka-connect:1.1.0
@@ -208,9 +218,9 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
       KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
 
-      CONNECT_SECURITY_PROTOCOL: SSL
-      CONNECT_SSL_TRUSTSTORE_LOCATION: /run/secrets/kafka.truststore.jks
-      CONNECT_SSL_TRUSTSTORE_PASSWORD:
+#      CONNECT_SECURITY_PROTOCOL: SSL
+#      CONNECT_SSL_TRUSTSTORE_LOCATION: /run/secrets/kafka.truststore.jks
+#      CONNECT_SSL_TRUSTSTORE_PASSWORD:
 
   kafka-ui:
     image: provectuslabs/kafka-ui:902f11a1d95ed5211519d10b9757124678ecd479

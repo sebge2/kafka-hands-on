@@ -8,6 +8,7 @@ bin/kafka/volume/zookeeper/zookeeper-1
 bin/kafka/volume/zookeeper/zookeeper-2
 bin/kafka/volume/avro/*.avro
 bin/kafka/volume/ui-manager/*
+bin/kafka/volume/ksql-server/*
 
 **/.terraform
 **/*.hcl

@@ -77,9 +77,9 @@ generate_client_certificate() {
 
   echo "# kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --consumer.config ./ssl-debug.properties
 security.protocol = SSL
-ssl.truststore.location = /kafka/ssl/client-$CLIENT_NAME.ts.p12
+ssl.truststore.location = ./client-$CLIENT_NAME.ts.p12
 ssl.truststore.password = $CLIENT_TRUSTSTORE_PASSWORD
-ssl.keystore.location = /kafka/ssl/client-$CLIENT_NAME.ks.p12
+ssl.keystore.location = ./client-$CLIENT_NAME.ks.p12
 ssl.keystore.password = $CLIENT_KEYSTORE_PASSWORD
 ssl.key.password = $CLIENT_KEYSTORE_PASSWORD" > "$CLIENT_SSL_CONFIG_DIR/ssl-debug.properties"
 }
@@ -136,6 +136,7 @@ generate_broker_ca_certificates
 generate_client_ca_certificates
 
 generate_client_certificate "ui-manager" "./volume/ui-manager/ssl"
+generate_client_certificate "ksql-server" "./volume/ksql-server/ssl"
 
 generate_broker_certificates "broker-1"
 generate_broker_certificates "broker-2"
