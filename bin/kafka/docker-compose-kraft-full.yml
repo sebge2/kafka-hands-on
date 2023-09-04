@@ -121,7 +121,7 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ./volume/ksql:/demo
+      - ./volume/ksql/sample-queries:/ksql/sample-queries
       - ./volume/ksql-extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
@@ -207,6 +207,10 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/usr/share/filestream-connectors,/usr/share/my-connectors"
       KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
+
+      CONNECT_SECURITY_PROTOCOL: SSL
+      CONNECT_SSL_TRUSTSTORE_LOCATION: /run/secrets/kafka.truststore.jks
+      CONNECT_SSL_TRUSTSTORE_PASSWORD:
 
   kafka-ui:
     image: provectuslabs/kafka-ui:902f11a1d95ed5211519d10b9757124678ecd479

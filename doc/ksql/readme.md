@@ -31,22 +31,22 @@ ksql
 Let's create all the structure of our application.
 
 ````
-run script '/demo/01-create-stream.ksql';
-run script '/demo/02-create-stream-from-stream.ksql';
-run script '/demo/03-create-table.ksql';
-run script '/demo/04-create-join-from-table-stream.ksql';
-run script '/demo/05-create-stream-for-pull-queries.ksql';
-run script '/demo/06-create-aggregate-query.ksql';
-run script '/demo/07-create-source-connector.ksql';
-run script '/demo/08-create-stream-avro.ksql';
-run script '/demo/09-create-stream-struct.ksql'; 
-run script '/demo/10-create-stream-with-key.ksql';
-run script '/demo/11-create-table-with-key.ksql';
-run script '/demo/12-repartition-stream.ksql';
-run script '/demo/13-mergin-streams.ksql';
-run script '/demo/14-windowing.ksql';
-run script '/demo/15-geospatial.ksql';
-run script '/demo/16-use-user-defined-function.sql';
+run script '/ksql/sample-queries/01-create-stream.ksql';
+run script '/ksql/sample-queries/02-create-stream-from-stream.ksql';
+run script '/ksql/sample-queries/03-create-table.ksql';
+run script '/ksql/sample-queries/04-create-join-from-table-stream.ksql';
+run script '/ksql/sample-queries/05-create-stream-for-pull-queries.ksql';
+run script '/ksql/sample-queries/06-create-aggregate-query.ksql';
+run script '/ksql/sample-queries/07-create-source-connector.ksql';
+run script '/ksql/sample-queries/08-create-stream-avro.ksql';
+run script '/ksql/sample-queries/09-create-stream-struct.ksql'; 
+run script '/ksql/sample-queries/10-create-stream-with-key.ksql';
+run script '/ksql/sample-queries/11-create-table-with-key.ksql';
+run script '/ksql/sample-queries/12-repartition-stream.ksql';
+run script '/ksql/sample-queries/13-mergin-streams.ksql';
+run script '/ksql/sample-queries/14-windowing.ksql';
+run script '/ksql/sample-queries/15-geospatial.ksql';
+run script '/ksql/sample-queries/16-use-user-defined-function.ksql';
 ````
 
 
