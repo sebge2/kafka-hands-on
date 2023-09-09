@@ -4,6 +4,7 @@
 bin/kafka/volume/connectors/*
 bin/kafka/volume/broker/broker-1/
 bin/kafka/volume/broker/broker-2/
+bin/kafka/volume/broker/shared/
 bin/kafka/volume/zookeeper/zookeeper-1
 bin/kafka/volume/zookeeper/zookeeper-2
 bin/kafka/volume/avro/*.avro

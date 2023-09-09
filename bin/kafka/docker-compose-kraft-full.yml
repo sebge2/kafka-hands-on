@@ -11,6 +11,7 @@ services:
       - hands-on-network
     volumes:
       - ./volume/broker/broker-1/ssl:/kafka/ssl
+      - ./volume/broker/shared/ssl:/kafka/shared-ssl
       - ./volume/broker:/my-data
       - ./volume/broker/broker-1/logs:/kafka/kafka-logs
     environment:
@@ -22,6 +23,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:SSL,BROKER:SSL,EXTERNAL:SSL
+      KAFKA_EARLY_START_LISTENERS: CONTROLLER
       # Kraft
       KAFKA_ENABLE_KRAFT: yes
       KAFKA_BROKER_ID: 1
@@ -45,8 +47,12 @@ services:
       KAFKA_SSL_TRUSTSTORE_PASSWORD: "server-broker-1-ts-password"
       KAFKA_SSL_TRUSTSTORE_TYPE: "PKCS12"
       KAFKA_SSL_CLIENT_AUTH: "required"
-      KAFKA_SECURITY_PROTOCOL: SSL
+      KAFKA_SECURITY_PROTOCOL: "SSL"
       #KAFKA_JMX_OPTS: "-Djavax.net.debug=all"
+      # ACL
+      KAFKA_AUTHORIZER_CLASS_NAME: "org.apache.kafka.metadata.authorizer.StandardAuthorizer"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+      KAFKA_SUPER_USERS: User:CN=admin,O=SGerard,C=BE;User:CN=kafka-broker-1,O=SGerard,C=BE;User:CN=kafka-broker-2,O=SGerard,C=BE
 
   kafka-broker-2:
     image: confluentinc/cp-kafka:7.4.0
@@ -58,6 +64,7 @@ services:
       - hands-on-network
     volumes:
       - ./volume/broker/broker-2/ssl:/kafka/ssl
+      - ./volume/broker/shared/ssl:/kafka/shared-ssl
       - ./volume/broker:/my-data
       - ./volume/broker/broker-2/logs:/kafka/kafka-logs
     environment:
@@ -69,6 +76,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:SSL,BROKER:SSL,EXTERNAL:SSL
+      KAFKA_EARLY_START_LISTENERS: CONTROLLER
       # Kraft
       KAFKA_ENABLE_KRAFT: yes
       KAFKA_BROKER_ID: 2
@@ -92,8 +100,12 @@ services:
       KAFKA_SSL_TRUSTSTORE_PASSWORD: "server-broker-2-ts-password"
       KAFKA_SSL_TRUSTSTORE_TYPE: "PKCS12"
       KAFKA_SSL_CLIENT_AUTH: "required"
-      KAFKA_SECURITY_PROTOCOL: SSL
+      KAFKA_SECURITY_PROTOCOL: "SSL"
       #KAFKA_JMX_OPTS: "-Djavax.net.debug=all"
+      # ACL
+      KAFKA_AUTHORIZER_CLASS_NAME: "org.apache.kafka.metadata.authorizer.StandardAuthorizer"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+      KAFKA_SUPER_USERS: User:CN=admin,O=SGerard,C=BE;User:CN=kafka-broker-1,O=SGerard,C=BE;User:CN=kafka-broker-2,O=SGerard,C=BE
 
   kafka-schema-registry:
     image: confluentinc/cp-schema-registry:7.4.0

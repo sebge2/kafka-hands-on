@@ -135,6 +135,7 @@ remove_ca_certificate
 generate_broker_ca_certificates
 generate_client_ca_certificates
 
+generate_client_certificate "admin" "./volume/broker/shared/ssl"
 generate_client_certificate "ui-manager" "./volume/ui-manager/ssl"
 generate_client_certificate "ksql-server" "./volume/ksql-server/ssl"
 generate_client_certificate "schema-registry" "./volume/schema-registry/ssl"
