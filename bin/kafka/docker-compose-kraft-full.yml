@@ -105,7 +105,7 @@ services:
       # ACL
       KAFKA_AUTHORIZER_CLASS_NAME: "org.apache.kafka.metadata.authorizer.StandardAuthorizer"
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
-      KAFKA_SUPER_USERS: User:CN=admin,O=SGerard,C=BE;User:CN=kafka-broker-1,O=SGerard,C=BE;User:CN=kafka-broker-2,O=SGerard,C=BE
+      KAFKA_SUPER_USERS: User:CN=admin,O=SGerard,C=BE;User:CN=kafka-broker-1,O=SGerard,C=BE;User:CN=kafka-broker-2,O=SGerard,C=BE # https://cwiki.apache.org/confluence/display/KAFKA/KIP-801%3A+Implement+an+Authorizer+that+stores+metadata+in+__cluster_metadata#KIP801:ImplementanAuthorizerthatstoresmetadatain__cluster_metadata-Bootstrapping https://stackoverflow.com/questions/74671787/kafka-cluster-using-kraft-mtls-and-standardauthorizer-not-starting-up-getting
 
   kafka-schema-registry:
     image: confluentinc/cp-schema-registry:7.4.0

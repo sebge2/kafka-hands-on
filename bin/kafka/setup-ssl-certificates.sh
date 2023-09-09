@@ -32,6 +32,7 @@ generate_client_ca_certificates() {
 generate_client_certificate() {
   CLIENT_NAME=$1
   CLIENT_SSL_CONFIG_DIR=$2
+  CLIENT_SSL_CONFIG_DOCKER_DIR=$3
 
   CLIENT_TRUSTSTORE_LOCATION="$CLIENT_SSL_CONFIG_DIR/client-$CLIENT_NAME.ts.p12"
   CLIENT_TRUSTSTORE_PASSWORD="client-$CLIENT_NAME-ts-password"
@@ -75,13 +76,13 @@ generate_client_certificate() {
   echo "Import client certificate into client's keystore"
   keytool -keystore "$CLIENT_KEYSTORE_LOCATION" -storepass "$CLIENT_KEYSTORE_PASSWORD" -keypass "$CLIENT_KEYSTORE_PASSWORD" -alias "$CLIENT_NAME" -import -file "$CLIENT_CERTIFICATE_SIGNED" -noprompt
 
-  echo "# kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --consumer.config ./ssl-debug.properties
+  echo "# kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --consumer.config $CLIENT_SSL_CONFIG_DOCKER_DIR/ssl-debug-$CLIENT_NAME.properties
 security.protocol = SSL
-ssl.truststore.location = ./client-$CLIENT_NAME.ts.p12
+ssl.truststore.location = $CLIENT_SSL_CONFIG_DOCKER_DIR/client-$CLIENT_NAME.ts.p12
 ssl.truststore.password = $CLIENT_TRUSTSTORE_PASSWORD
-ssl.keystore.location = ./client-$CLIENT_NAME.ks.p12
+ssl.keystore.location = $CLIENT_SSL_CONFIG_DOCKER_DIR/client-$CLIENT_NAME.ks.p12
 ssl.keystore.password = $CLIENT_KEYSTORE_PASSWORD
-ssl.key.password = $CLIENT_KEYSTORE_PASSWORD" > "$CLIENT_SSL_CONFIG_DIR/ssl-debug.properties"
+ssl.key.password = $CLIENT_KEYSTORE_PASSWORD" > "$CLIENT_SSL_CONFIG_DIR/ssl-debug-$CLIENT_NAME.properties"
 }
 
 generate_broker_certificates() {
@@ -135,12 +136,15 @@ remove_ca_certificate
 generate_broker_ca_certificates
 generate_client_ca_certificates
 
-generate_client_certificate "admin" "./volume/broker/shared/ssl"
-generate_client_certificate "ui-manager" "./volume/ui-manager/ssl"
-generate_client_certificate "ksql-server" "./volume/ksql-server/ssl"
-generate_client_certificate "schema-registry" "./volume/schema-registry/ssl"
-generate_client_certificate "connect-1" "./volume/connect/connect-1/ssl"
-generate_client_certificate "connect-2" "./volume/connect/connect-2/ssl"
+generate_client_certificate "admin" "./volume/broker/shared/ssl/admin" "/kafka/shared-ssl/admin"
+generate_client_certificate "sample-client-1" "./volume/broker/shared/ssl/sample-client-1" "/kafka/shared-ssl/sample-client-1"
+generate_client_certificate "sample-client-2" "./volume/broker/shared/ssl/sample-client-2" "/kafka/shared-ssl/sample-client-2"
+
+generate_client_certificate "ui-manager" "./volume/ui-manager/ssl" "/ui-manager/ssl"
+generate_client_certificate "ksql-server" "./volume/ksql-server/ssl" "/ksql/ssl"
+generate_client_certificate "schema-registry" "./volume/schema-registry/ssl" "/schema-registry/ssl"
+generate_client_certificate "connect-1" "./volume/connect/connect-1/ssl" "/connect/ssl"
+generate_client_certificate "connect-2" "./volume/connect/connect-2/ssl" "/connect/ssl"
 
 generate_broker_certificates "broker-1"
 generate_broker_certificates "broker-2"
