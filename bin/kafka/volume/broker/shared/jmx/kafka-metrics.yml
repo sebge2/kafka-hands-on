@@ -1,3 +1,5 @@
+# https://github.com/prometheus/jmx_exporter
+# https://github.com/oded-dd/prometheus-jmx-kafka/blob/master/kafka-jmx-metric.yaml
 lowercaseOutputName: true
 rules:
   - pattern: kafka.server<type=ReplicaManager, name=UnderReplicatedPartitions><>Value
