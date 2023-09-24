@@ -59,7 +59,7 @@ services:
       # Monitoring
       KAFKA_JMX_PORT: 19999
       KAFKA_JMX_HOSTNAME: kafka-broker-1
-      KAFKA_OPTS: "-javaagent:/kafka/jmx/jmx_prometheus_javaagent-0.3.1.jar=19998:/kafka/jmx/kafka-metrics.yml"
+      KAFKA_OPTS: "-javaagent:/kafka/jmx/jmx_prometheus_javaagent-0.9.jar=19998:/kafka/jmx/kafka-metrics.yml"
       KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=19999 -Dcom.sun.management.jmxremote.rmi.port=19999 -Djava.rmi.server.hostname=0.0.0.0"
 
   kafka-broker-2:
@@ -120,7 +120,7 @@ services:
       # Monitoring
       KAFKA_JMX_PORT: 29999
       KAFKA_JMX_HOSTNAME: kafka-broker-2
-      KAFKA_OPTS: "-javaagent:/kafka/jmx/jmx_prometheus_javaagent-0.3.1.jar=29998:/kafka/jmx/kafka-metrics.yml"
+      KAFKA_OPTS: "-javaagent:/kafka/jmx/jmx_prometheus_javaagent-0.9.jar=29998:/kafka/jmx/kafka-metrics.yml"
       KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=29999 -Dcom.sun.management.jmxremote.rmi.port=29999 -Djava.rmi.server.hostname=0.0.0.0"
 
   kafka-schema-registry:
