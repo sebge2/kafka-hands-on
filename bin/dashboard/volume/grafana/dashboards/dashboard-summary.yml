@@ -1,0 +1,9 @@
+# https://www.robustperception.io/monitoring-kafka-with-prometheus/
+apiVersion: 1
+
+providers:
+  - name: Summary
+    type: file
+    options:
+      path:
+        /etc/grafana/provisioning/dashboards/summary_721_rev1.json
