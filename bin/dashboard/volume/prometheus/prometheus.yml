@@ -1,3 +1,5 @@
+# See all metrics name: http://localhost:9090/api/v1/label/__name__/values
+# See metrics: http://localhost:9090/metrics
 global:
   scrape_interval: 10s
   evaluation_interval: 10s
