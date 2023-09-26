@@ -86,10 +86,10 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(process_cpu_seconds_total{job=\"kafka\"}[1m])",
+              "expr": "rate(java_lang_operatingsystem_processcputime{job=\"kafka\"}[1m])",
               "intervalFactor": 2,
               "legendFormat": "{{instance}}",
-              "metric": "process_cpu_seconds_total",
+              "metric": "java_lang_operatingsystem_processcputime",
               "refId": "A",
               "step": 4
             }
