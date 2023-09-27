@@ -1682,7 +1682,7 @@
             "name": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by(topic) (kafka_log_log_size{job=\"kafka\",})",
+          "expr": "sum by(topic) (kafka_log_size{job=\"kafka\",})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1776,7 +1776,7 @@
             "name": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by(instance) (kafka_log_log_size{job=\"kafka\",})",
+          "expr": "sum by(instance) (kafka_log_size{job=\"kafka\",})",
           "format": "time_series",
           "hide": false,
           "interval": "",
