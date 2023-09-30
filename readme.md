@@ -18,7 +18,7 @@ Different stacks are available:
 
 ````
 cd bin/kafka
-cd zookeeper / cd simple-kraft
+cd zookeeper / cd simple-kraft / cd advanced-kraft
 ./start.sh
 ````
 
