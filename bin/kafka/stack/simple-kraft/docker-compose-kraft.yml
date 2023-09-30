@@ -10,8 +10,8 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ./volume/broker:/my-data
-      - ./volume/broker/broker-1/logs:/kafka/kafka-logs
+      - ../../volume/broker:/my-data
+      - ../../volume/broker/broker-1/logs:/kafka/kafka-logs
     environment:
       KAFKA_ENABLE_KRAFT: yes
       KAFKA_BROKER_ID: 1
@@ -42,8 +42,8 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ./volume/broker:/my-data
-      - ./volume/broker/broker-2/logs:/kafka/kafka-logs
+      - ../../volume/broker:/my-data
+      - ../../volume/broker/broker-2/logs:/kafka/kafka-logs
     environment:
       KAFKA_ENABLE_KRAFT: yes
       KAFKA_BROKER_ID: 2
@@ -77,7 +77,7 @@ services:
     ports:
       - '8081:8081'
     volumes:
-      - ./volume/schema-registry/sample-schema:/schema-registry/sample-schema
+      - ../../volume/schema-registry/sample-schema:/schema-registry/sample-schema
     environment:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
@@ -90,8 +90,8 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ./volume/ksql:/demo
-      - ./volume/ksql-extensions:/etc/ksql-server/ext
+      - ../../volume/ksql:/demo
+      - ../../volume/ksql-extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
     depends_on:
@@ -122,8 +122,8 @@ services:
     ports:
       - '18083:8083'
     volumes:
-      - ./volume/connectors-config:/demo
-      - ./volume/connectors:/usr/share/my-connectors
+      - ../../volume/connectors-config:/demo
+      - ../../volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:
@@ -155,8 +155,8 @@ services:
     ports:
       - '28083:8083'
     volumes:
-      - ./volume/connectors-config:/demo
-      - ./volume/connectors:/usr/share/my-connectors
+      - ../../volume/connectors-config:/demo
+      - ../../volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:

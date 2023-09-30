@@ -14,8 +14,8 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ../volume/zookeeper/zookeeper-1/data:/var/lib/zookeeper/data
-      - ../volume/zookeeper/zookeeper-1/log:/var/lib/zookeeper/log
+      - ../../volume/zookeeper/zookeeper-1/data:/var/lib/zookeeper/data
+      - ../../volume/zookeeper/zookeeper-1/log:/var/lib/zookeeper/log
 
   zookeeper-2:
     image: confluentinc/cp-zookeeper:6.1.9
@@ -30,8 +30,8 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ../volume/zookeeper/zookeeper-2/data:/var/lib/zookeeper/data
-      - ../volume/zookeeper/zookeeper-2/log:/var/lib/zookeeper/log
+      - ../../volume/zookeeper/zookeeper-2/data:/var/lib/zookeeper/data
+      - ../../volume/zookeeper/zookeeper-2/log:/var/lib/zookeeper/log
 
   zookeeper-ui:
     image: elkozmon/zoonavigator:1.1.2
@@ -54,8 +54,8 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ../volume/broker:/my-data
-      - ../volume/broker/broker-1/logs:/kafka/kafka-logs
+      - ../../volume/broker:/my-data
+      - ../../volume/broker/broker-1/logs:/kafka/kafka-logs
     depends_on:
       - zookeeper-1
       - zookeeper-2
@@ -81,8 +81,8 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ../volume/broker:/my-data
-      - ../volume/broker/broker-2/logs:/kafka/kafka-logs
+      - ../../volume/broker:/my-data
+      - ../../volume/broker/broker-2/logs:/kafka/kafka-logs
     depends_on:
       - zookeeper-1
       - zookeeper-2
@@ -113,7 +113,7 @@ services:
     ports:
       - '8081:8081'
     volumes:
-      - ../volume/schema-registry/sample-schema:/schema-registry/sample-schema
+      - ../../volume/schema-registry/sample-schema:/schema-registry/sample-schema
     environment:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
@@ -133,7 +133,7 @@ services:
     ports:
       - '8082:8082'
     volumes:
-      - ../volume/schema-registry/sample-schema:/schema-registry/sample-schema
+      - ../../volume/schema-registry/sample-schema:/schema-registry/sample-schema
     environment:
       KAFKA_REST_HOST_NAME: 'rest-proxy'
       KAFKA_REST_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT://kafka-broker-2:29092
@@ -149,8 +149,8 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ../volume/ksql:/demo
-      - ../volume/ksql-extensions:/etc/ksql-server/ext
+      - ../../volume/ksql:/demo
+      - ../../volume/ksql-extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
     depends_on:
@@ -185,8 +185,8 @@ services:
     ports:
       - '18083:8083'
     volumes:
-      - ../volume/connectors-config:/demo
-      - ../volume/connectors:/usr/share/my-connectors
+      - ../../volume/connectors-config:/demo
+      - ../../volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:
@@ -220,8 +220,8 @@ services:
     ports:
       - '28083:8083'
     volumes:
-      - ../volume/connectors-config:/demo
-      - ../volume/connectors:/usr/share/my-connectors
+      - ../../volume/connectors-config:/demo
+      - ../../volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:
@@ -273,7 +273,7 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ../volume/avro:/demo
+      - ../../volume/avro:/demo
 
 networks:
   hands-on-network:

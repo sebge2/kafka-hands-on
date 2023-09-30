@@ -1,7 +1,7 @@
 # Kafka Hands On
 
 I created this project for saving code written in the scope of the following [course](https://www.udemy.com/course/apache-kafka).
-Afterwards, I added documentation helping me to pass the certification.
+Afterward, I added documentation helping me to pass the Kafka certification.
 
 
 ## Startup
@@ -10,9 +10,15 @@ Kafka and other services will be executed on Docker. You may increase the maximu
 
 
 ### Start Kafka
+
+Different stacks are available:
+* Kafka with Zookeeper
+* Kafka with Kraft
+* Kafka with Kraft with an advanced configuration (SSL, monitoring, ...)
+
 ````
 cd bin/kafka
-docker-compose up -d
+cd zookeeper / cd simple-kraft
 ./start.sh
 ````
 
