@@ -12,11 +12,11 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ./volume/broker/broker-1/ssl:/kafka/ssl
-      - ./volume/broker/shared/ssl:/kafka/shared-ssl
-      - ./volume/broker/shared/jmx:/kafka/jmx
-      - ./volume/broker:/my-data
-      - ./volume/broker/broker-1/logs:/kafka/kafka-logs
+      - ../../volume/broker/broker-1/ssl:/kafka/ssl
+      - ../../volume/broker/shared/ssl:/kafka/shared-ssl
+      - ../../volume/broker/shared/jmx:/kafka/jmx
+      - ../../volume/broker:/my-data
+      - ../../volume/broker/broker-1/logs:/kafka/kafka-logs
     environment:
       KAFKA_BROKER_RACK: "r1"
       KAFKA_LOG_DIRS: /kafka/kafka-logs
@@ -73,11 +73,11 @@ services:
     networks:
       - hands-on-network
     volumes:
-      - ./volume/broker/broker-2/ssl:/kafka/ssl
-      - ./volume/broker/shared/ssl:/kafka/shared-ssl
-      - ./volume/broker/shared/jmx:/kafka/jmx
-      - ./volume/broker:/my-data
-      - ./volume/broker/broker-2/logs:/kafka/kafka-logs
+      - ../../volume/broker/broker-2/ssl:/kafka/ssl
+      - ../../volume/broker/shared/ssl:/kafka/shared-ssl
+      - ../../volume/broker/shared/jmx:/kafka/jmx
+      - ../../volume/broker:/my-data
+      - ../../volume/broker/broker-2/logs:/kafka/kafka-logs
     environment:
       KAFKA_BROKER_RACK: "r1"
       KAFKA_LOG_DIRS: /kafka/kafka-logs
@@ -135,8 +135,8 @@ services:
     ports:
       - '8081:8081'
     volumes:
-      - ./volume/schema-registry/ssl:/schema-registry/ssl
-      - ./volume/schema-registry/sample-schema:/schema-registry/sample-schema
+      - ../../volume/schema-registry/ssl:/schema-registry/ssl
+      - ../../volume/schema-registry/sample-schema:/schema-registry/sample-schema
     environment:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: SSL://kafka-broker-1:19092,SSL://kafka-broker-2:29092
@@ -159,9 +159,9 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ./volume/ksql-server/ssl:/ksql/ssl
-      - ./volume/ksql-server/sample-queries:/ksql/sample-queries
-      - ./volume/ksql-extensions:/etc/ksql-server/ext
+      - ../../volume/ksql-server/ssl:/ksql/ssl
+      - ../../volume/ksql-server/sample-queries:/ksql/sample-queries
+      - ../../volume/ksql-extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
     depends_on:
@@ -201,9 +201,9 @@ services:
     ports:
       - '18083:8083'
     volumes:
-      - ./volume/connect/connect-1/ssl:/connect/ssl
-      - ./volume/connectors-config:/demo
-      - ./volume/connectors:/usr/share/my-connectors
+      - ../../volume/connect/connect-1/ssl:/connect/ssl
+      - ../../volume/connectors-config:/demo
+      - ../../volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:
@@ -244,9 +244,9 @@ services:
     ports:
       - '28083:8083'
     volumes:
-      - ./volume/connect/connect-2/ssl:/connect/ssl
-      - ./volume/connectors-config:/demo
-      - ./volume/connectors:/usr/share/my-connectors
+      - ../../volume/connect/connect-2/ssl:/connect/ssl
+      - ../../volume/connectors-config:/demo
+      - ../../volume/connectors:/usr/share/my-connectors
     networks:
       - hands-on-network
     environment:
@@ -287,7 +287,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./volume/ui-manager/ssl:/ui-manager/ssl
+      - ../../volume/ui-manager/ssl:/ui-manager/ssl
     networks:
       - hands-on-network
     environment:

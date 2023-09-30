@@ -88,7 +88,7 @@ ssl.key.password = $CLIENT_KEYSTORE_PASSWORD" > "$CLIENT_SSL_CONFIG_DIR/ssl-debu
 generate_broker_certificates() {
   BROKER_NAME=$1
   BROKE_HOSTNAME="kafka-$BROKER_NAME"
-  BROKER_SSL_CONFIG_DIR="./volume/broker/$BROKER_NAME/ssl"
+  BROKER_SSL_CONFIG_DIR="../../volume/broker/$BROKER_NAME/ssl"
 
   BROKER_TRUSTSTORE_LOCATION="$BROKER_SSL_CONFIG_DIR/server-$BROKER_NAME.ts.p12"
   BROKER_TRUSTSTORE_PASSWORD="server-$BROKER_NAME-ts-password"
@@ -136,15 +136,15 @@ remove_ca_certificate
 generate_broker_ca_certificates
 generate_client_ca_certificates
 
-generate_client_certificate "admin" "./volume/broker/shared/ssl/admin" "/kafka/shared-ssl/admin"
-generate_client_certificate "sample-client-1" "./volume/broker/shared/ssl/sample-client-1" "/kafka/shared-ssl/sample-client-1"
-generate_client_certificate "sample-client-2" "./volume/broker/shared/ssl/sample-client-2" "/kafka/shared-ssl/sample-client-2"
+generate_client_certificate "admin" "../../volume/broker/shared/ssl/admin" "/kafka/shared-ssl/admin"
+generate_client_certificate "sample-client-1" "../../volume/broker/shared/ssl/sample-client-1" "/kafka/shared-ssl/sample-client-1"
+generate_client_certificate "sample-client-2" "../../volume/broker/shared/ssl/sample-client-2" "/kafka/shared-ssl/sample-client-2"
 
-generate_client_certificate "ui-manager" "./volume/ui-manager/ssl" "/ui-manager/ssl"
-generate_client_certificate "ksql-server" "./volume/ksql-server/ssl" "/ksql/ssl"
-generate_client_certificate "schema-registry" "./volume/schema-registry/ssl" "/schema-registry/ssl"
-generate_client_certificate "connect-1" "./volume/connect/connect-1/ssl" "/connect/ssl"
-generate_client_certificate "connect-2" "./volume/connect/connect-2/ssl" "/connect/ssl"
+generate_client_certificate "ui-manager" "../../volume/ui-manager/ssl" "/ui-manager/ssl"
+generate_client_certificate "ksql-server" "../../volume/ksql-server/ssl" "/ksql/ssl"
+generate_client_certificate "schema-registry" "../../volume/schema-registry/ssl" "/schema-registry/ssl"
+generate_client_certificate "connect-1" "../../volume/connect/connect-1/ssl" "/connect/ssl"
+generate_client_certificate "connect-2" "../../volume/connect/connect-2/ssl" "/connect/ssl"
 
 generate_broker_certificates "broker-1"
 generate_broker_certificates "broker-2"
