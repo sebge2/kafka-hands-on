@@ -16,13 +16,13 @@ kafka-acls --bootstrap-server kafka-broker-1:19092 --add --topic test --operatio
 kafka-acls --bootstrap-server kafka-broker-1:19092 --add --topic test --operation Write --allow-principal User:CN=sample-client-2,O=SGerard,C=BE -command-config /kafka/shared-ssl/admin/ssl-debug-admin.properties
 ````
 
-Authorized:
+Now, you can test, the client is authorized:
 ````
 kafka-console-consumer --bootstrap-server kafka-broker-1:19092 --topic test --consumer.config /kafka/shared-ssl/sample-client-1/ssl-debug-sample-client-1.properties
 kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test --producer.config /kafka/shared-ssl/sample-client-2/ssl-debug-sample-client-2.properties
 ````
 
-Not authorized:
+The other client is not authorized:
 ````
 kafka-console-producer --bootstrap-server kafka-broker-1:19092 --topic test --producer.config /kafka/shared-ssl/sample-client-1/ssl-debug-sample-client-1.properties
 ````
