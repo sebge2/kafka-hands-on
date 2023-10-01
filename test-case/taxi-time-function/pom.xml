@@ -56,7 +56,7 @@
                         <configuration>
                             <target>
                                 <copy file="${project.build.directory}/${project.build.finalName}.jar"
-                                      tofile="../../bin/kafka/volume/ksql-extensions/${project.artifactId}.jar"/>
+                                      tofile="../../bin/kafka/volume/ksql-server/extensions/${project.artifactId}.jar"/>
                             </target>
                         </configuration>
                         <goals>

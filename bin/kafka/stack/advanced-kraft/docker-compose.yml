@@ -168,7 +168,7 @@ services:
     volumes:
       - ../../volume/ksql-server/ssl:/ksql/ssl
       - ../../volume/ksql-server/sample-queries:/ksql/sample-queries
-      - ../../volume/ksql-extensions:/etc/ksql-server/ext
+      - ../../volume/ksql-server/extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
     depends_on:

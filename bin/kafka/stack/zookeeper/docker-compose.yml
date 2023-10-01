@@ -150,7 +150,7 @@ services:
       - 8088:8088
     volumes:
       - ../../volume/ksql:/demo
-      - ../../volume/ksql-extensions:/etc/ksql-server/ext
+      - ../../volume/ksql-server/extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
     depends_on:
