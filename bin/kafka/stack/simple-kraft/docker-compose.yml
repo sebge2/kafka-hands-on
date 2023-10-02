@@ -96,7 +96,7 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - ../../volume/ksql:/demo
+      - ../../volume/ksql-server/sample-queries:/ksql/sample-queries
       - ../../volume/ksql-server/extensions:/etc/ksql-server/ext
     networks:
       - hands-on-network
