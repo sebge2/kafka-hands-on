@@ -9,5 +9,5 @@ register_schema() {
 
 register_schema "user-complaint/schema-v1.avro" "user_complaint-value"
 register_schema "user-complaint/schema-v2.avro" "user_complaint-value"
-register_schema "weather-row/schema-v1.avsc" "WEATHER_ROW-value"
+register_schema "weather-row/schema-v1.avsc" "weather_row-value"
 
