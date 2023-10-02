@@ -63,10 +63,10 @@ services:
       KAFKA_OPTS: "-javaagent:/kafka/jmx/jmx_prometheus_javaagent-0.9.jar=19998:/kafka/jmx/kafka-metrics.yml"
       KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=19999 -Dcom.sun.management.jmxremote.rmi.port=19999 -Djava.rmi.server.hostname=0.0.0.0"
     healthcheck:
-      test: ["CMD", "/kafka/shared-scripts/setup-acl.sh"]
-      interval: 30s
+      test: ["CMD", "/kafka/shared-scripts/check.sh"]
+      interval: 15s
       timeout: 30s
-      retries: 3
+      retries: 10
 
   kafka-broker-2:
     image: confluentinc/cp-kafka:7.4.0
@@ -144,6 +144,7 @@ services:
     volumes:
       - ../../volume/schema-registry/ssl:/schema-registry/ssl
       - ../../volume/schema-registry/sample-schema:/schema-registry/sample-schema
+      - ../../volume/schema-registry/scripts:/schema-registry/scripts
     environment:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: SSL://kafka-broker-1:19092,SSL://kafka-broker-2:29092
@@ -158,6 +159,11 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_SSL_TRUSTSTORE_TYPE: "PKCS12"
       SCHEMA_REGISTRY_KAFKASTORE_SSL_CLIENT_AUTH: "required"
       SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: "SSL"
+    healthcheck:
+      test: ["CMD", "/schema-registry/scripts/check.sh"]
+      interval: 15s
+      timeout: 30s
+      retries: 10
 
   ksql-server:
     image: confluentinc/cp-ksql-server:5.4.11-1-ubi8
