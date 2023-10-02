@@ -1,6 +1,7 @@
 # Weather Row Schema
 
 This schema will be used by the taxi application in the weather-row stream, see [KSQL commands](../../../../../../doc/ksql/readme.md).
+They are automatically registered on the container startup.
 
 Version 1:
 ````

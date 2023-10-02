@@ -1,6 +1,7 @@
 # User Compliant Schema
 
-This schema will be used by the taxi application in the user complaint stream, see [KSQL commands](../../../../../../doc/ksql/readme.md).
+This schema will be used by the taxi application in the user complaint stream, see [KSQL commands](../../../../../../doc/ksql/readme.md). 
+They are automatically registered on the container startup.
 
 Version 1:
 ````
