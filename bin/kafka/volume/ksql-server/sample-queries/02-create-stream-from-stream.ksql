@@ -1,5 +1,11 @@
-create stream user_profile_pretty
+create stream if not exists user_profile_pretty
     with (kafka_topic='user_profile_pretty')
-    as select (firstname + ' ' + ucase(lastname) + ' from ' + country_code + ' has a rating of ' + cast(rating as varchar) + ' stars. ' +
-            case when rating < 2.5 then 'Poor' when rating between 2.4 and 4.2 then 'Good' else 'Excellent' end)
-        as description from user_profile;
+    as select
+        (
+            firstname + ' ' + ucase(lastname)
+            + ' from ' + country_code
+            + ' has a rating of ' + cast(rating as varchar) + ' stars. '
+            + case when rating < 2.5 then 'Poor' when rating between 2.4 and 4.2 then 'Good' else 'Excellent' end
+        )
+        as description
+    from user_profile;
