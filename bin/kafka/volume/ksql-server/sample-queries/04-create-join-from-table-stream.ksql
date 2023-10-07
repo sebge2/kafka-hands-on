@@ -1,2 +1,2 @@
-create stream user_profile_enriched as
+create stream if not exists user_profile_enriched as
     select * from user_profile up left join  country ct on up.country_code = ct.code;

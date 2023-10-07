@@ -1,4 +1,13 @@
-create stream driver_location (id integer, country_code varchar, city varchar, driver_name varchar) with(kafka_topic='driver_location', partitions=1, key='id', value_format='JSON');
+create stream if not exists driver_location (
+    id integer,
+    country_code varchar,
+    city varchar,
+    driver_name varchar
+) with(
+    kafka_topic='driver_location',
+    partitions=1, key='id',
+    value_format='JSON'
+);
 
 insert into driver_location (id, country_code, city, driver_name) values (0, 'BE', 'Namur', 'John Smith');
 insert into driver_location (id, country_code, city, driver_name) values (1, 'BE', 'Bruxelles', 'John Doe');

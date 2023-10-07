@@ -1,4 +1,4 @@
-create table country (
+create table if not exists country (
     code varchar,
     name varchar
 ) with (
