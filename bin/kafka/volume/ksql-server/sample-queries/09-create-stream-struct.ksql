@@ -1,4 +1,4 @@
-create stream weather (
+create stream if not exists weather (
     city STRUCT<name varchar, country varchar, latitude double, longitude double>,
     description varchar,
     clouds bigint,
@@ -6,4 +6,9 @@ create stream weather (
     humidity bigint,
     pressure double,
     rain double
-) with (kafka_topic='weather', value_format='json', partitions=1, replicas=1);
+) with (
+    kafka_topic='weather',
+    value_format='json',
+    partitions=1,
+    replicas=1
+);

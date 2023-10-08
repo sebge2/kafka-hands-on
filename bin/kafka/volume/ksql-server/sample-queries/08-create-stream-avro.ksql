@@ -1,1 +1,6 @@
-create stream user_complaint with (kafka_topic='user_complaint', value_format='avro', partitions='1', replicas='1');
+create stream if not exists user_complaint with (
+    kafka_topic='user_complaint',
+    value_format='avro',
+    partitions='1',
+    replicas='1'
+);

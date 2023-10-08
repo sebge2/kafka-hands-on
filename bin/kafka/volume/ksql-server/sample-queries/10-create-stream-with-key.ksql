@@ -1,4 +1,4 @@
-create stream weather_row with (value_format='avro') as
+create stream if not exists weather_row with (value_format='avro') as
     select
         city->name as city_name,
         city->country as country,
