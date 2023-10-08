@@ -1,0 +1,8 @@
+create table if not exists number_requests_per_city_last_minute as
+    select
+        data_source,
+        city_name,
+        count(*) as number_requests
+    from ride_request_world
+    window tumbling(size 60 seconds)
+    group by data_source, city_name;
