@@ -1,0 +1,2 @@
+create stream if not exists driver_profile_repartitioned with (partitions=1)
+    as select * from driver_profile partition by driver_name;

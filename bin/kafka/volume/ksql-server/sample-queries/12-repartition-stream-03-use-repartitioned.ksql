@@ -1,0 +1,6 @@
+create stream if not exists driver_country as
+    select
+        dp.driver_name,
+        ct.name as country_name,
+        dp.rating
+    from driver_profile_repartitioned dp left join country ct on ct.code = dp.country_code;

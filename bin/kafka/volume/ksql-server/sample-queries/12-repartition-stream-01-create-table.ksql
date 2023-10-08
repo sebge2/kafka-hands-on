@@ -1,0 +1,10 @@
+create stream if not exists driver_profile(
+    driver_name varchar,
+    country_code varchar,
+    rating double
+) with (
+    kafka_topic='driver_profile',
+    partitions='3',
+    replicas=1,
+    value_format='json'
+);
