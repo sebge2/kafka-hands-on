@@ -1,1 +1,7 @@
-create table weather_table_row with(kafka_topic='WEATHER_ROW', value_format='avro', key='city_name');
+create table if not exists weather_table_row with(
+    kafka_topic='weather_row',
+    value_format='avro',
+    key='city_name',
+    partitions='1',
+    replicas='1'
+);
