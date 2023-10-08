@@ -8,4 +8,3 @@ create table if not exists country (
     replicas='1',
     key='code'
 );
-
