@@ -1,5 +1,20 @@
-create stream driver_profile(driver_name varchar, country_code varchar, rating double) with (kafka_topic='driver_profile', partitions='3', replicas=1, value_format='json');
+create stream driver_profile(
+    driver_name varchar,
+    country_code varchar,
+    rating double
+) with (
+    kafka_topic='driver_profile',
+    partitions='3',
+    replicas=1,
+    value_format='json'
+);
 
-create stream driver_profile_repartitioned with (partitions=1) as select * from driver_profile partition by driver_name;
+create stream driver_profile_repartitioned with (partitions=1)
+    as select * from driver_profile partition by driver_name;
 
-create stream driver_country as select dp.driver_name, ct.name as country_name, dp.rating from driver_profile_repartitioned dp left join country ct on ct.code = dp.country_code;
+create stream driver_country as
+    select
+        dp.driver_name,
+        ct.name as country_name,
+        dp.rating
+    from driver_profile_repartitioned dp left join country ct on ct.code = dp.country_code;

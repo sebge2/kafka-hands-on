@@ -9,11 +9,11 @@ bin/kafka/volume/zookeeper/zookeeper-1
 bin/kafka/volume/zookeeper/zookeeper-2
 bin/kafka/volume/avro/*.avro
 bin/kafka/volume/ui-manager/*
-bin/kafka/volume/ksql-server/*
 bin/kafka/volume/schema-registry/ssl/
 bin/kafka/volume/connect/connect-1/
 bin/kafka/volume/connect/connect-2/
 bin/kafka/volume/ksql-server/extensions/
+bin/kafka/volume/ksql-server/ssl/
 
 **/.terraform
 **/*.hcl
