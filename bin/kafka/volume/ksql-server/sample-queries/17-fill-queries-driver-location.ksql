@@ -1,0 +1,5 @@
+insert into driver_location (id, country_code, city, driver_name) values (0, 'BE', 'Namur', 'John Smith');
+insert into driver_location (id, country_code, city, driver_name) values (1, 'BE', 'Bruxelles', 'John Doe');
+insert into driver_location (id, country_code, city, driver_name) values (3, 'BE', 'Arlon', 'Marc Lerclerc');
+insert into driver_location (id, country_code, city, driver_name) values (4, 'US', 'New York', 'Derek');
+insert into driver_location (id, country_code, city, driver_name) values (5, 'UK', 'London', 'Carole');

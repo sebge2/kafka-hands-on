@@ -1,0 +1,1 @@
+insert into ride_request_world select 'Europe' as data_source, * from ride_request_europe;

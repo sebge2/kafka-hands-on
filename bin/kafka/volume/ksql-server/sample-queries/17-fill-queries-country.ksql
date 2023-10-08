@@ -1,0 +1,7 @@
+insert into country(code, name) values ('BE','Belgium');
+insert into country(code, name) values ('FR','France');
+insert into country(code, name) values ('AU','Australia');
+insert into country(code, name) values ('IN','India');
+insert into country(code, name) values ('GB','Great Britain');
+insert into country(code, name) values ('US','United States');
+insert into country(code, name) values ('Ru','Russia');
