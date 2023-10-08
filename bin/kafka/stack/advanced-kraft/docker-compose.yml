@@ -203,6 +203,12 @@ services:
       KSQL_SSL_TRUSTSTORE_PASSWORD: "client-ksql-server-ts-password"
       KSQL_SSL_TRUSTSTORE_TYPE: "PKCS12"
       KSQL_SECURITY_PROTOCOL: SSL
+    healthcheck:
+      test: ["CMD", "/ksql/scripts/check.sh"]
+      start_period: 60s
+      interval: 15s
+      timeout: 30s
+      retries: 10
 
   kafka-connect-1:
     image: sebge2/kafka-connect:1.1.0
