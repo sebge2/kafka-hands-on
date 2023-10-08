@@ -1,0 +1,12 @@
+create stream if not exists ride_request_world(
+    data_source varchar,
+    user varchar,
+    longitude double,
+    latitude double,
+    city_name varchar
+) with (
+    kafka_topic='ride_request_world',
+    partitions='1',
+    replicas='1',
+    value_format='json'
+);
