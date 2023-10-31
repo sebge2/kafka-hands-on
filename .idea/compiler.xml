@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="kafka-hadson-consumer-avro" />
         <module name="kafka-hadson-stream" />
+        <module name="kafka-hadson-manual-commit" />
         <module name="kafka-hadson-github-connector" />
         <module name="kafka-hadson-taxi-time-function" />
         <module name="kafka-hadson-consumer-1-group-1" />
@@ -31,12 +32,14 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="consumer-manual-commit" target="17" />
       <module name="kafka-handson-opensearch-consumer" target="17" />
       <module name="my-source-connector" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="consumer-manual-commit" options="-parameters" />
       <module name="kafka-hadson-admin-api" options="-parameters" />
       <module name="kafka-hadson-avro-schema" options="-parameters" />
       <module name="kafka-hadson-consumer-1-group-1" options="-parameters" />
@@ -46,6 +49,7 @@
       <module name="kafka-hadson-cooperative-receiver-1" options="-parameters" />
       <module name="kafka-hadson-cooperative-receiver-2" options="-parameters" />
       <module name="kafka-hadson-github-connector" options="-parameters" />
+      <module name="kafka-hadson-manual-commit" options="-parameters" />
       <module name="kafka-hadson-producer-avro" options="-parameters" />
       <module name="kafka-hadson-producer-with-key" options="-parameters" />
       <module name="kafka-hadson-producer-without-key" options="-parameters" />

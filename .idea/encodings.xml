@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/feature/consumer-2-group-1/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/feature/consumer-avro/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/feature/consumer-avro/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/feature/consumer-manual-commit/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/feature/cooperative-receiver-1/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/feature/cooperative-receiver-2/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/feature/producer-avro/src/main/java" charset="UTF-8" />

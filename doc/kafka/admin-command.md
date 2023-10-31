@@ -106,7 +106,7 @@ kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --delete --group k
 
 ### Export Offsets
 
-Offsets will be exported to a CSV file:
+Offsets will be exported to a CSV file (topic, partition number, offset):
 ````
 kafka-consumer-groups --bootstrap-server kafka-broker-1:19092 --export --group my-group  --topic test --reset-offsets --to-current --dry-run > offsets.csv
 ````

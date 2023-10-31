@@ -27,5 +27,6 @@
 		<module>stream</module>
 		<module>admin-api</module>
 		<module>transaction</module>
-	</modules>
+        <module>consumer-manual-commit</module>
+    </modules>
 </project>
