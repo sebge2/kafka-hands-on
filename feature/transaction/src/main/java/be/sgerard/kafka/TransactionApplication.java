@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class TransactionApplication {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         final Properties producerConfig = new Properties();
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092");
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -56,7 +56,6 @@ public class TransactionApplication {
                     producer.beginTransaction();
 
                     records.forEach(record -> producer.send(transform(record)));
-
 
                     final Map<TopicPartition, OffsetAndMetadata> offsets = StreamSupport
                             .stream(records.spliterator(), false)
