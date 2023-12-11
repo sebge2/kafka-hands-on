@@ -4,20 +4,21 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
-import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.SessionWindows;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class ThumblingWindowExample {
+public class SessionWindowExample {
 
     public static final Serde<String> STRING_SERDE = Serdes.String();
 
     public static void main(String[] args) {
         final Properties config = new Properties();
-        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "tumbling-window-example");
+        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "session-window-example");
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092");
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         config.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, STRING_SERDE.getClass());
@@ -47,14 +48,14 @@ public class ThumblingWindowExample {
                 .flatMapValues(textLine -> Arrays.asList(textLine.split("\\W+")))
                 .selectKey((key, word) -> "key")
                 .groupByKey()
-                .windowedBy(TimeWindows.ofSizeAndGrace(Duration.ofMinutes(1), Duration.ofMinutes(1)))
+                .windowedBy(SessionWindows.ofInactivityGapWithNoGrace(Duration.ofSeconds(30)))
                 .count()
                 .toStream()
                 .map((key, value) -> new KeyValue<>(
                         Instant.ofEpochMilli(key.window().start()) + " --- " + Instant.ofEpochMilli(key.window().end()),
                         value
                 ))
-                .to("word-count-by-tumbling-window", Produced.with(Serdes.String(), Serdes.Long()));
+                .to("word-count-by-session-window", Produced.with(Serdes.String(), Serdes.Long()));
 
         return builder.build();
     }
