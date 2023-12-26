@@ -47,7 +47,7 @@ public class FlatMapExample {
                 .flatMap((key, value) ->
                         Stream.of(value.split("\\W+"))
                                 .map(word -> new KeyValue<>(UUID.randomUUID().toString(), word))
-                                .collect(toList())
+                                .toList()
                 ); // stateless, re-partitioning;
 
         wordCounts.to("stream-example-flatmap");
